@@ -1,0 +1,83 @@
+.form-register {
+    max-width: 600px;
+    margin: 50px auto 0px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-group-with-input input {
+    height: 36px;
+    border-radius: 16px;
+    border: 1px solid var(--purple-color);
+    padding: 8px 14px;
+    color: var(--black-color-for-menu);
+    font-size: 16px;
+}
+
+.form-group-with-input label,
+.form-group-with-three-card-text {
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--black-color-for-menu);
+    margin-right: 12px;
+}
+
+.form-group-with-input {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group-with-three-card-elements {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.form-group-with-three-card-element {
+    border-radius: 16px;
+    background-color: var(--color-for-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    box-shadow: var(--box-shadow-for-card);
+    width: 100%;
+    padding: 12px;
+}
+
+.form-group-with-three-card-element-count {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--black-color-for-menu);
+}
+
+.form-group-with-three-card-element-price {
+    font-size: 14px;
+    color: var(--black-color-for-menu);
+}
+
+.form-group-with-three-card-element:hover {
+    background-color: var(--purple-color);
+}
+
+.form-group-with-three-card-element:hover .form-group-with-three-card-element-count,
+.form-group-with-three-card-element:hover .form-group-with-three-card-element-price {
+    color: var(--background-color);
+}
+
+.form-register button {
+    margin-top: 54px;
+    width: fit-content;
+    align-self: center;
+}
+
+.form-register p {
+    align-self: center;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--black-color-for-menu);
+}

@@ -1,0 +1,117 @@
+.navbar {
+    background-color: var(--purple-color);
+    width: 400px;
+    box-shadow: var(--box-shadow-for-card);
+    padding: 32px 20px;
+    position: relative;
+}
+
+.navbar-logo {
+    margin-left: 14px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.navbar-logo-text {
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--background-color);
+}
+
+.navbar-menu {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.navbar-catalog,
+.navbar-report,
+.navbar-another {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.navbar-catalog-title,
+.navbar-report-title,
+.navbar-another-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-left: 18px;
+    text-transform: uppercase;
+}
+
+.navbar-menu ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+}
+
+.navbar-menu li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-menu li {
+    padding: 8px 18px;
+    border-radius: 16px;
+}
+
+.navbar-menu li:hover {
+    background-color: var(--black-color-for-menu);
+}
+
+.navbar-menu li a {
+    text-decoration: none;
+    color: var(--background-color);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.arrow-for-close-menu {
+    position: absolute;
+    right: -14px;
+    top: 88px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #B39CD0;
+    border-radius: 100%;
+    padding: 2px;
+}
+
+@media (max-width: 1270px) {
+    .navbar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        min-height: 100vh;
+    }
+}
+
+@media (max-width: 992px) {
+    .navbar {
+        height: max-content;
+    }
+
+    .navbar-logo-text {
+        font-size: 28px;
+    }
+
+    .navbar-logo img {
+        height: 48px;
+    }
+
+    .navbar-item-li,
+    .navbar-menu li a {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {}
+
+@media(max-width: 576px) {}

@@ -1,0 +1,13 @@
+hr.first {
+    height: 30px;
+    background-color: rgb(15, 36, 36);
+    width: 1px;
+    border-width: 0;
+}
+
+hr.second {
+    height: 30px;
+    background-color: var(--background-color);
+    width: 1px;
+    border-width: 0;
+}

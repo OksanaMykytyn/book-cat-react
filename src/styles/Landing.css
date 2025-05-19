@@ -1,0 +1,207 @@
+.landing-promo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 70px;
+    margin-top: 100px;
+}
+
+.landing-promo img {
+    display: block;
+}
+
+.landing-promo-group {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.landing-promo-group h1,
+.landing-why h2,
+.landing-payment h2 {
+    font-size: 36px;
+    color: var(--black-color-for-menu);
+    font-weight: 600;
+}
+
+.landing-promo-group p,
+.landing-why-text {
+    font-size: 24px;
+    color: var(--black-color-for-menu);
+}
+
+.landing-promo-group-buttons {
+    display: flex;
+    gap: 28px;
+}
+
+.landing-why {
+    margin-top: 100px;
+}
+
+.landing-why-group {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 112px;
+}
+
+.landing-why-left-image,
+.landing-why-right-image {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 52px;
+}
+
+.landing-payment {
+    margin-top: 94px;
+}
+
+.landing-payment-group {
+    margin-top: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.landing-payment-element-count {
+    font-weight: 600;
+    font-size: 28px;
+    color: var(--black-color-for-menu);
+}
+
+.landing-payment-element-price {
+    font-size: 18px;
+    color: var(--black-color-for-menu);
+}
+
+.landing-payment-element {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+}
+
+.landing-payment-element:hover {
+    background-color: var(--purple-color);
+}
+
+.landing-payment-element:hover .landing-payment-element-count,
+.landing-payment-element:hover .landing-payment-element-price {
+    color: var(--background-color);
+}
+
+footer {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--purple-color);
+    color: var(--background-color);
+    font-size: 18px;
+    height: 74px;
+}
+
+@media (max-width: 992px) {
+
+    .landing-promo,
+    .landing-why-left-image,
+    .landing-payment-group {
+        flex-direction: column;
+    }
+
+    .landing-why-right-image {
+        flex-direction: column-reverse;
+    }
+
+    .landing-promo-group {
+        align-items: center;
+    }
+
+    .landing-promo-group h1,
+    .landing-promo-group p,
+    .landing-promo-group h2 {
+        text-align: center;
+    }
+
+    .landing-why h2,
+    .landing-payment h2 {
+        font-size: 32px;
+        text-align: center;
+    }
+
+    .landing-why-left-image img,
+    .landing-why-right-image img {
+        max-width: 440px;
+        width: 50vw;
+    }
+
+    .landing-why-text {
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .landing-header-register-text,
+    .landing-header-login-text {
+        font-size: 14px;
+    }
+
+    .landing-header-logo-text {
+        font-size: 24px;
+    }
+
+    .landing-promo img {
+        max-height: 380px;
+        height: 50vw;
+    }
+}
+
+@media(max-width: 576px) {
+
+    .landing-header-register-text,
+    .landing-header-login-text {
+        display: none;
+    }
+
+    .landing-promo {
+        margin-top: 50px;
+    }
+
+    .landing-promo-group h1 {
+        font-size: 28px;
+    }
+
+    .landing-promo-group p,
+    .landing-why-text,
+    .landing-payment-element-count {
+        font-size: 16px;
+    }
+
+    .landing-payment-element {
+        max-width: 300px;
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .landing-payment-element-price {
+        font-size: 14px;
+    }
+
+    .landing-why-left-image,
+    .landing-why-right-image {
+        gap: 20px;
+    }
+
+    .landing-why-group {
+        margin-top: 40px;
+        gap: 38px;
+    }
+
+    .landing-promo-group-buttons {
+        flex-direction: column;
+    }
+}

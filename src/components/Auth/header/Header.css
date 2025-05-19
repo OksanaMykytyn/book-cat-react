@@ -1,0 +1,39 @@
+.header-auth {
+    padding: 8px 20px;
+    min-height: 74px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--box-shadow-for-card);
+    background-color: var(--color-for-card);
+}
+
+.header-auth-logo {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.header-auth-logo-text {
+    color: var(--black-color-for-menu);
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.header-auth-title {
+    color: var(--black-color-for-menu);
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.header-auth-support-text {
+    color: var(--black-color-for-menu);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.header-auth-support {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}

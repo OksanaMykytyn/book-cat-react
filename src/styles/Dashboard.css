@@ -1,0 +1,50 @@
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-section {
+    width: 100%;
+}
+
+.row-in-card {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.row-in-card label {
+    color: var(--black-color-for-menu);
+    font-weight: 500;
+    font-size: 16px;
+    width: max-content;
+}
+
+.row-in-card input {
+    width: 100%;
+}
+
+.add-book,
+.search-book,
+.create-document {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.add-book button,
+.search-book button,
+.create-document button {
+    align-self: center;
+}
+
+.tools-for-book .row-in-card {
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.tools-for-book .row-in-card p {
+    font-size: 18px;
+    color: var(--black-color-for-menu);
+}

@@ -1,0 +1,51 @@
+.button {
+    padding: 6px 18px;
+    border: none;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 135px;
+}
+
+.button-yellow {
+    background-color: #FFF5A0;
+}
+
+.button-grey {
+    background-color: #858585;
+}
+
+.button-red {
+    background-color: #FFAF95;
+}
+
+.button-text {
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.button-purple-min {
+    padding: 12px 38px;
+    background-color: var(--purple-color);
+    width: unset;
+    max-width: unset;
+    box-shadow: var(--box-shadow-for-card);
+}
+
+.button-purple-min .button-text {
+    color: var(--background-color);
+    font-size: 18px;
+}
+
+.button-white-min {
+    padding: 12px 38px;
+    background-color: var(--color-for-card);
+    width: unset;
+    max-width: unset;
+    box-shadow: var(--box-shadow-for-card);
+}
+
+.button-white-min .button-text {
+    color: var(--black-color-for-menu);
+    font-size: 18px;
+}

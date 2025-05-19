@@ -1,0 +1,41 @@
+.landing-header {
+    background-color: var(--purple-color);
+    min-height: 74px;
+    padding: 8px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.landing-header-logo {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.landing-header-logo-text {
+    font-weight: 600;
+    font-size: 36px;
+    color: var(--background-color);
+}
+
+.landing-header-reg-and-log {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.landing-header-register,
+.landing-header-login {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.landing-header-register-text,
+.landing-header-login-text {
+    color: var(--background-color);
+    font-weight: 600;
+    font-size: 18px;
+}
