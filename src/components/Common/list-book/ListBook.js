@@ -4,7 +4,8 @@ import './ListBook.css';
 import Divider from '../divider/Divider';
 import ToolsForBook from '../tools-for-book/ToolsForBook';
 
-const ListBook = ({ books, onDeleteBook, onRemoveBook }) => {
+const ListBook = ({ books, onDeleteBook, onRemoveBook, totalBooks, totalPrice }) => {
+
     const [selectedBooks, setSelectedBooks] = useState([]);
 
     const handleBookClick = (book) => {
@@ -20,7 +21,7 @@ const ListBook = ({ books, onDeleteBook, onRemoveBook }) => {
 
     return (
         <div className="list-book">
-            <ToolsForBook books={books} />
+            <ToolsForBook totalBooks={totalBooks} totalPrice={totalPrice} />
             {books.map((book, index) => (
                 <React.Fragment key={book.inventoryNumber}>
                     <div
@@ -39,6 +40,7 @@ const ListBook = ({ books, onDeleteBook, onRemoveBook }) => {
                             udcForm={book.udcForm}
                             accompanyingDoc={book.accompanyingDoc}
                             price={book.price}
+                            removedBook={book.removedBook}
                             isChecked={selectedBooks.includes(book)}
                             onCheckboxChange={() => handleBookClick(book)}
                             onDeleteBook={onDeleteBook}

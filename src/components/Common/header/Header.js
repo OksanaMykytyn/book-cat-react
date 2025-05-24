@@ -8,7 +8,7 @@ import menu from '../../../assets/icon/for_menu.svg';
 
 import { Link } from "react-router-dom";
 
-const Header = ({ name, isNavbarVisible, onToggleNavbar }) => {
+const Header = ({ name, isNavbarVisible, onToggleNavbar, userName }) => {
     return (
         <div className="header">
             <div className="header-logo-and-menu">
@@ -24,7 +24,7 @@ const Header = ({ name, isNavbarVisible, onToggleNavbar }) => {
                 </Link>
                 <Divider type="first" />
                 <Link to="/dashboard/profile" className="header-nav-account">
-                    <div className="header-nav-account-text">Калуський ліцей №7</div>
+                    <div className="header-nav-account-text">{userName}</div>
                     <img src={profileImage} alt="Profile" />
                 </Link>
             </div>

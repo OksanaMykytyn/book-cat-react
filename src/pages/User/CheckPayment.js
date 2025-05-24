@@ -1,13 +1,39 @@
-import react from "react";
+import React, { useEffect, useState } from "react";
 
 import Header from "../../components/Common/header/Header";
 
 import '../../styles/CheckPayment.css';
+import axios from "axios";
 
 const CheckPaymentPage = ({ toggleNavbar, isNavbarVisible }) => {
+
+    const [userName, setUserName] = useState("");
+
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            try {
+                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'X-Requested-From': 'BookCatApp'
+                    }
+                });
+                setUserName(response.data.username);
+            } catch (error) {
+                console.error("Помилка при отриманні профілю користувача:", error);
+            }
+        };
+
+        fetchUserProfile();
+    }, []);
+
+
     return (
         <>
-            <Header name="Підтвердження транзакції..." onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} />
+            <Header name="Підтвердження транзакції..." onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} />
             <div className="container-for-card info-card">
                 <h1>Ваш акаунт в очікуванні підтвердження платежу</h1>
                 <p>Очікуйте підтвердження платіжної транзакції. Якщо операція пройшла успішно, впродовж 24 год ви отримаєте можливість користуватися онлайн-каталогом</p>

@@ -8,7 +8,7 @@ import darkTheme from '../../../assets/icon/dark_theme.svg';
 
 import { Link } from "react-router-dom";
 
-const Navbar = ({ isOpen, onClose }) => {
+const Navbar = ({ isOpen, onClose, darkMode, setDarkMode }) => {
 
     const closeMenu = () => {
         if (onClose) {
@@ -75,12 +75,13 @@ const Navbar = ({ isOpen, onClose }) => {
                                 <img src={arrow} alt="Arrow" className="navbar-item-icon" />
                             </Link>
                         </li>
-                        <li>
-                            <Link>
+                        <li onClick={() => setDarkMode(prev => !prev)} className="navbar-theme-toggle">
+                            <div>
                                 <div className="navbar-item-li">Темна тема</div>
-                                <img src={darkTheme} alt="Arrow" className="navbar-item-icon" />
-                            </Link>
+                                <img src={darkTheme} alt="Темна тема" className="navbar-item-icon" />
+                            </div>
                         </li>
+
                         <li>
                             <Link to="/dashboard/documentation">
                                 <div className="navbar-item-li">Довідка</div>

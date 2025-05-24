@@ -4,7 +4,7 @@
 }
 
 .main-section {
-    width: 100%;
+    width: calc(100% - 400px);
 }
 
 .row-in-card {
@@ -27,7 +27,8 @@
 
 .add-book,
 .search-book,
-.create-document {
+.create-document,
+.settings {
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -35,7 +36,8 @@
 
 .add-book button,
 .search-book button,
-.create-document button {
+.create-document button,
+.settings button {
     align-self: center;
 }
 

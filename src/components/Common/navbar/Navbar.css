@@ -50,7 +50,8 @@
     list-style: none;
 }
 
-.navbar-menu li a {
+.navbar-menu li a,
+.navbar-menu li div {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -65,7 +66,8 @@
     background-color: var(--black-color-for-menu);
 }
 
-.navbar-menu li a {
+.navbar-menu li a,
+.navbar-menu li div {
     text-decoration: none;
     color: var(--background-color);
     font-size: 18px;
@@ -107,7 +109,8 @@
     }
 
     .navbar-item-li,
-    .navbar-menu li a {
+    .navbar-menu li a,
+    .navbar-menu li div {
         font-size: 16px;
     }
 }

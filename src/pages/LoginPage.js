@@ -1,57 +1,73 @@
-import React, { useState } from "react"; // Додано useState
+import React, { useState } from "react";
 import Header from "../components/Auth/header/Header";
-import { Link, useNavigate } from "react-router-dom"; // Додано useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Common/button/Button";
 import "../styles/Login.css";
-import axios from "axios"; // Додано axios
+import axios from "axios";
 
 const LoginPage = () => {
-    const [email, setEmail] = useState(""); // Стан для електронної пошти
-    const [password, setPassword] = useState(""); // Стан для пароля
-    const navigate = useNavigate(); // Для перенаправлення після входу
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
-        e.preventDefault(); // Запобігаємо перезавантаженню сторінки
+        e.preventDefault();
+        setErrorMessage("");
 
         try {
-            const response = await axios.post('https://localhost:7104/api/user/login', {
-                userlogin: email, // Змінити на ваше поле логіна
-                userpassword: password // Змінити на ваше поле пароля
+            const response = await axios.post("https://localhost:7104/api/user/login", {
+                userlogin: email,
+                userpassword: password
+            }, {
+                headers: { 'X-Requested-From': 'BookCatApp' }
             });
 
-            const token = response.data.token; // Отримуємо токен з відповіді
-            localStorage.setItem('token', token); // Зберігаємо токен у localStorage
+            const token = response.data.token;
+            localStorage.setItem("token", token);
 
-            // Перенаправлення на іншу сторінку після успішного входу
-            navigate("/dashboard"); // Змінити на вашу домашню сторінку або іншу
+            // для адміна
+            if (email.trim().toLowerCase() === "admin@gmail.com") {
+                navigate("/dashboard-admin");
+            } else {
+                navigate("/dashboard/add-book");
+            }
+
         } catch (error) {
-            console.error('Login failed:', error.response?.data || error.message);
-            // Тут можна додати обробку помилок, наприклад, показати повідомлення про помилку
+            const msg = error.response?.data || "Помилка входу. Спробуйте ще раз.";
+            setErrorMessage(msg);
         }
     };
 
     return (
         <>
             <Header title="Вхід" />
-            <form onSubmit={handleLogin} className="container-for-card form-login"> {/* Додано onSubmit */}
+            <form onSubmit={handleLogin} className="container-for-card form-login">
                 <div className="form-group-with-input">
-                    <label htmlFor="">Електронна пошта</label>
+                    <label htmlFor="email">Електронна пошта</label>
                     <input
                         type="email"
+                        id="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)} // Зберігаємо значення електронної пошти
-                        required // Додаємо валідацію
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
                     />
                 </div>
                 <div className="form-group-with-input">
-                    <label htmlFor="">Пароль</label>
+                    <label htmlFor="password">Пароль</label>
                     <input
                         type="password"
+                        id="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)} // Зберігаємо значення пароля
-                        required // Додаємо валідацію
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
                     />
                 </div>
+
+                {errorMessage && (
+                    <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
+                )}
+
                 <Button color="purple-min" name="Увійти" />
                 <p>Якщо у вас немає акаунту, натисніть <Link to="/register">Зареєструватися</Link></p>
             </form>

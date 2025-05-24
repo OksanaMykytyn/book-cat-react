@@ -60,12 +60,15 @@
     color: var(--black-color-for-menu);
 }
 
-.form-group-with-three-card-element:hover {
+.form-group-with-three-card-element:hover,
+.form-group-with-three-card-element.selected {
     background-color: var(--purple-color);
 }
 
 .form-group-with-three-card-element:hover .form-group-with-three-card-element-count,
-.form-group-with-three-card-element:hover .form-group-with-three-card-element-price {
+.form-group-with-three-card-element:hover .form-group-with-three-card-element-price,
+.form-group-with-three-card-element.selected .form-group-with-three-card-element-price,
+.form-group-with-three-card-element.selected .form-group-with-three-card-element-count {
     color: var(--background-color);
 }
 

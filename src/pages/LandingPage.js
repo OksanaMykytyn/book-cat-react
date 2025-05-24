@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import '../styles/Landing.css';
 import topImage from "../assets/image/top_image.jpg";
 import bottomImage from "../assets/image/bottom_image.jpg";
@@ -11,6 +12,16 @@ import Header from "../components/Landing/header/Header";
 import Button from "../components/Common/button/Button";
 
 const LandingPage = () => {
+    const navigate = useNavigate();
+
+    const handleRegisterClick = () => {
+        navigate("/register");
+    };
+
+    const handleSupportClick = () => {
+        navigate("/login");
+    };
+
     return (
         <div className="landing">
             <Header />
@@ -20,8 +31,8 @@ const LandingPage = () => {
                     <h1>Створи онлайн-каталог бібліотеки</h1>
                     <p>Реєструй акаунт, додавай книги, генеруй звітнісь! Якщо виникають питання, звертайся у нашу підтримку</p>
                     <div className="landing-promo-group-buttons">
-                        <Button color="purple-min" name="Зареєструватися" />
-                        <Button color="white-min" name="Написати" />
+                        <Button color="purple-min" name="Зареєструватися" onClick={handleRegisterClick} />
+                        <Button color="white-min" name="Увійти" onClick={handleSupportClick} />
                     </div>
                 </div>
             </section>
@@ -65,7 +76,7 @@ const LandingPage = () => {
                 <div className="landing-promo-group">
                     <h2>Перенеси бібліотеку у свій онлайн-каталог від BookCat</h2>
                     <div className="landing-promo-group-buttons">
-                        <Button color="purple-min" name="Зареєструватися" />
+                        <Button color="purple-min" name="Зареєструватися" onClick={handleRegisterClick} />
                     </div>
                 </div>
             </section>

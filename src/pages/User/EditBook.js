@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/Common/header/Header";
 import Button from "../../components/Common/button/Button";
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const EditBookPage = ({ books, removedBooks, onUpdateBook, toggleNavbar, isNavbarVisible }) => {
+const EditBookPage = ({ toggleNavbar, isNavbarVisible }) => {
     const { inventoryNumber } = useParams();
     const navigate = useNavigate();
-
-    const bookToEdit = books.find(book => book.inventoryNumber === inventoryNumber) ||
-        removedBooks.find(book => book.inventoryNumber === inventoryNumber);
-
 
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
@@ -19,37 +18,127 @@ const EditBookPage = ({ books, removedBooks, onUpdateBook, toggleNavbar, isNavba
     const [udcForm, setUdcForm] = useState("");
     const [price, setPrice] = useState("");
     const [accompanyingDoc, setAccompanyingDoc] = useState("");
+    const [writeOffDate, setWriteOffDate] = useState("");
+
+
+    const [userName, setUserName] = useState("");
+    const [errors, setErrors] = useState({});
 
     useEffect(() => {
-        if (bookToEdit) {
-            setTitle(bookToEdit.title);
-            setAuthor(bookToEdit.author);
-            setCopies(bookToEdit.copies);
-            setYear(bookToEdit.year);
-            setUdc(bookToEdit.udc);
-            setUdcForm(bookToEdit.udcForm);
-            setPrice(bookToEdit.price);
-            setAccompanyingDoc(bookToEdit.accompanyingDoc);
-        }
-    }, [bookToEdit]);
+        const fetchUserProfile = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) return;
 
-    const handleSubmit = (e) => {
+            try {
+                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'X-Requested-From': 'BookCatApp'
+                    }
+                });
+                setUserName(response.data.username);
+            } catch (error) {
+                console.error("Помилка при отриманні профілю користувача:", error);
+            }
+        };
+
+        fetchUserProfile();
+    }, []);
+
+    useEffect(() => {
+        const fetchBook = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) return;
+
+                const response = await axios.get(`https://localhost:7104/api/book/get/${inventoryNumber}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'X-Requested-From': 'BookCatApp'
+                    }
+                });
+                const book = response.data;
+                console.log("Дата списання:", book.writeOffDate);
+
+
+                setTitle(book.name || "");
+                setAuthor(book.author || "");
+                setYear(book.yearPublishing || "");
+                setUdc(book.udk || "");
+                setUdcForm(book.udkFormDocument || "");
+                setPrice(book.price || "");
+                setAccompanyingDoc(book.checkDocument || "");
+                setWriteOffDate(book.removed ? book.removed.substring(0, 10) : "");
+
+
+            } catch (error) {
+                console.error("Не вдалося завантажити дані книги:", error);
+                toast.error("Книгу не знайдено");
+            }
+        };
+
+        if (inventoryNumber) {
+            fetchBook();
+        }
+    }, [inventoryNumber]);
+
+    const validateFields = () => {
+        const newErrors = {};
+        if (!title || title.length > 255) newErrors.title = "Назва обов’язкова і не повинна перевищувати 255 символів.";
+        if (author && author.length > 255) newErrors.author = "Автор не повинен перевищувати 255 символів.";
+        if (udc && udc.length > 100) newErrors.udc = "УДК не повинен перевищувати 100 символів.";
+        if (udcForm && udcForm.length > 100) newErrors.udcForm = "УДК за формою не повинен перевищувати 100 символів.";
+        if (price && !/^\d+(\.\d{1,2})?$/.test(price)) newErrors.price = "Ціна повинна бути у форматі 0.00.";
+        if (accompanyingDoc && accompanyingDoc.length > 255) newErrors.accompanyingDoc = "Супровідний документ до 255 символів.";
+        if (year && (!/^\d{4}$/.test(year) || year < 1800 || year > 2100)) newErrors.year = "Рік повинен бути між 1800 і 2100.";
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!validateFields()) return;
+
+        const token = localStorage.getItem("token");
+        if (!token) {
+            toast.error("Не авторизовано");
+            return;
+        }
+
         const updatedBook = {
             inventoryNumber,
-            title,
+            name: title,
             author,
-            year: parseInt(year),
-            udc,
-            udcForm,
-            accompanyingDoc,
-            price: parseFloat(price),
+            yearPublishing: year ? parseInt(year) : null,
+            udk: udc,
+            udkFormDocument: udcForm,
+            checkDocument: accompanyingDoc,
+            price: price ? parseFloat(price) : null,
+            removed: writeOffDate ? writeOffDate : null
         };
-        onUpdateBook(updatedBook);
-        navigate(-1);
-    }; return (
+
+
+        try {
+            const response = await axios.put(`https://localhost:7104/api/book/update/${inventoryNumber}`, updatedBook, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "X-Requested-From": "BookCatApp"
+                }
+            });
+
+            toast.success("Книгу оновлено!");
+            navigate(-1);
+        } catch (error) {
+            console.error("Помилка при оновленні книги:", error);
+            toast.error("Помилка при оновленні книги");
+        }
+    };
+
+    return (
         <>
-            <Header name="Редагувати книгу" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} />
+            <Header name="Редагувати книгу" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} />
             <form onSubmit={handleSubmit} className="container-for-card add-book">
                 <div className="row-in-card">
                     <label>Назва</label>
@@ -57,32 +146,39 @@ const EditBookPage = ({ books, removedBooks, onUpdateBook, toggleNavbar, isNavba
                 </div>
                 <div className="row-in-card">
                     <label>Автор</label>
-                    <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} className="input" placeholder="Введіть текст..." required />
+                    <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} className="input" placeholder="Введіть текст..." />
                 </div>
                 <div className="row-in-card">
-                    <label>*Кількість примірників</label>
-                    <input type="number" value={copies} onChange={(e) => setCopies(e.target.value)} className="input" placeholder="Введіть кількість..." />
-                    <label>*Інвентарний номер</label>
-                    <input type="text" value={inventoryNumber} readOnly className="input" placeholder="Введіть інвентарний номер..." required />
+                    <label>Інвентарний номер</label>
+                    <input type="text" value={inventoryNumber} readOnly className="input" />
+                    <label>Дата списання</label>
+                    <input
+                        type="date"
+                        value={writeOffDate}
+                        onChange={(e) => setWriteOffDate(e.target.value)}
+                        className="input"
+                    />
+
                 </div>
                 <div className="row-in-card">
                     <label>Рік видання</label>
-                    <input type="number" value={year} onChange={(e) => setYear(e.target.value)} className="input" placeholder="Введіть рік..." required />
+                    <input type="number" value={year} onChange={(e) => setYear(e.target.value)} className="input" />
                     <label>УДК</label>
-                    <input type="text" value={udc} onChange={(e) => setUdc(e.target.value)} className="input" placeholder="Введіть УДК..." />
+                    <input type="text" value={udc} onChange={(e) => setUdc(e.target.value)} className="input" />
                 </div>
                 <div className="row-in-card">
                     <label>УДК за формою документу</label>
-                    <input type="text" value={udcForm} onChange={(e) => setUdcForm(e.target.value)} className="input" placeholder="Введіть УДК за формою..." />
+                    <input type="text" value={udcForm} onChange={(e) => setUdcForm(e.target.value)} className="input" />
                     <label>Ціна примірника</label>
-                    <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} className="input" placeholder="Введіть ціну..." required />
+                    <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} className="input" />
                 </div>
                 <div className="row-in-card">
-                    <label>Дата і номер супровідного документу</label>
-                    <input type="text" value={accompanyingDoc} onChange={(e) => setAccompanyingDoc(e.target.value)} className="input" placeholder="Введіть дані..." />
+                    <label>Супровідний документ</label>
+                    <input type="text" value={accompanyingDoc} onChange={(e) => setAccompanyingDoc(e.target.value)} className="input" />
                 </div>
 
                 <Button name="Зберегти" color="purple-min" />
+                <ToastContainer />
             </form>
         </>
     );

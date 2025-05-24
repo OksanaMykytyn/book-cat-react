@@ -1,102 +1,179 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from "../../components/Common/header/Header";
 import ListBook from "../../components/Common/list-book/ListBook";
+import FormSearch from '../../components/Common/form-search/form-search';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const SearchBookPage = ({ books, onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisible }) => {
-    const [searchTerm, setSearchTerm] = useState("");
+const SearchBookPage = ({ onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisible }) => {
 
-    const filteredBooks = (books || []).filter((book) =>
-        book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        book.author.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const [books, setBooks] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [searchParams, setSearchParams] = useState({});
+    const [totalBooks, setTotalBooks] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
+
+    useEffect(() => {
+        fetchBooks(currentPage, searchParams);
+    }, [currentPage, searchParams]);
+
+
+    const booksPerPage = 20;
+
+    useEffect(() => {
+        fetchBooks(currentPage);
+    }, [currentPage]);
+
+    const fetchBooks = async (page, filters = {}) => {
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await axios.get(`https://localhost:7104/api/book/list`, {
+                params: {
+                    page,
+                    limit: booksPerPage,
+                    ...filters
+                },
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            const data = response.data;
+
+            const adaptedBooks = data.books.map(book => ({
+                inventoryNumber: book.inventoryNumber,
+                title: book.name,
+                author: book.author,
+                year: book.yearPublishing,
+                udc: book.udc || '',
+                udcForm: book.udcFormDocument || '',
+                accompanyingDoc: book.checkDocument || '',
+                price: book.price,
+                removedBook: book.removed
+            }));
+
+            setBooks(adaptedBooks);
+            setTotalPages(data.totalPages);
+            setTotalBooks(data.totalBooks);
+            setTotalPrice(data.totalPrice);
+
+        } catch (error) {
+            console.error("Помилка при завантаженні книг:", error);
+        }
+    };
+
+    const [userName, setUserName] = useState("");
+
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            try {
+                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'X-Requested-From': 'BookCatApp'
+                    }
+                });
+                setUserName(response.data.username);
+            } catch (error) {
+                console.error("Помилка при отриманні профілю користувача:", error);
+            }
+        };
+
+        fetchUserProfile();
+    }, []);
+
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const handleSearch = (params) => {
+        setSearchParams(params);
+        setCurrentPage(1);
+    };
+
+
+    const renderPagination = () => {
+        const pages = [];
+        for (let i = 1; i <= totalPages; i++) {
+            pages.push(
+                <button
+                    key={i}
+                    onClick={() => handlePageChange(i)}
+                    style={{
+                        margin: '0 5px',
+                        padding: '5px 10px',
+                        backgroundColor: i === currentPage ? '#ccc' : '#fff',
+                        border: '1px solid #999'
+                    }}
+                >
+                    {i}
+                </button>
+            );
+        }
+        return <div style={{ textAlign: 'center', marginTop: '20px' }}>{pages}</div>;
+    };
+
+    const removeBook = async (inventoryNumber, bookName) => {
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await axios.put(`https://localhost:7104/api/book/remove/${inventoryNumber}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'X-Requested-From': 'BookCatApp'
+                }
+            });
+
+            toast.success(`Книга "${bookName}" успішно списана.`);
+            fetchBooks(currentPage);
+        } catch (error) {
+            console.error("Помилка при списанні книги:", error);
+            toast.error("Не вдалося списати книгу.");
+        }
+    };
+
+    const deleteBook = async (inventoryNumber, bookName) => {
+        try {
+            const token = localStorage.getItem("token");
+
+            await axios.delete(`https://localhost:7104/api/book/delete/${inventoryNumber}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'X-Requested-From': 'BookCatApp'
+                }
+            });
+
+            toast.success(`Книга "${bookName}" успішно видалена.`);
+            fetchBooks(currentPage);
+        } catch (error) {
+            console.error("Помилка при видаленні книги:", error);
+            toast.error("Не вдалося видалити книгу.");
+        }
+    };
 
     return (
         <>
-            <Header name="Пошук по книгах" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} />
-            <form className="container-for-card search-book">
-                <div className="row-in-card">
-                    <label className="text">Пошук</label>
-                    <input type="text" name="title" id="title" className="input" placeholder="Пошук за назвою або автором..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)} />
-                </div>
-            </form>
-            <ListBook books={filteredBooks} onDeleteBook={onDeleteBook} onRemoveBook={onRemoveBook} />
+            <Header name="Пошук по книгах" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} />
+            <FormSearch onSearch={handleSearch} />
+            <ListBook
+                books={books}
+                onDeleteBook={deleteBook}
+                onRemoveBook={removeBook}
+                totalBooks={totalBooks}
+                totalPrice={totalPrice}
+            />
+
+            {renderPagination()}
+            <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
         </>
     );
 };
 
 export default SearchBookPage;
-
-
-// import react from "react";
-
-// import Header from "../../components/Common/header/Header";
-// import FormSearch from "../../components/Common/form-search/form-search";
-// import ListBook from "../../components/Common/list-book/ListBook";
-
-// const SearchBookPage = () => {
-
-//     const books = [
-//         {
-//             inventoryNumber: "39403",
-//             title: "1984",
-//             author: "Джордж Оруелл",
-//             year: 1949,
-//             udc: "821.111",
-//             udcForm: "Антиутопія",
-//             accompanyingDoc: "Немає",
-//             price: 250,
-//         },
-//         {
-//             inventoryNumber: "39404",
-//             title: "Гаррі Поттер і філософський камінь",
-//             author: "Джоан Роулінг",
-//             year: 1997,
-//             udc: "821.111",
-//             udcForm: "Фентезі",
-//             accompanyingDoc: "Немає",
-//             price: 200,
-//         },
-//         {
-//             inventoryNumber: "39405",
-//             title: "Убити пересмішника",
-//             author: "Харпер Лі",
-//             year: 1960,
-//             udc: "821.111",
-//             udcForm: "Роман",
-//             accompanyingDoc: "Немає",
-//             price: 240,
-//         },
-//         {
-//             inventoryNumber: "39406",
-//             title: "451 градус за Фаренгейтом",
-//             author: "Рей Бредбері",
-//             year: 1953,
-//             udc: "821.111",
-//             udcForm: "Наукова фантастика",
-//             accompanyingDoc: "Немає",
-//             price: 260,
-//         },
-//         {
-//             inventoryNumber: "39407",
-//             title: "Маленький принц",
-//             author: "Антуан де Сент-Екзюпері",
-//             year: 1943,
-//             udc: "841.512",
-//             udcForm: "Дитяча література",
-//             accompanyingDoc: "Немає",
-//             price: 180,
-//         },
-//     ];
-
-//     return (
-//         <>
-//             <Header name="Пошук по книгах" />
-//             <FormSearch />
-//             <ListBook books={books} />
-//         </>
-//     );
-// };
-
-// export default SearchBookPage;

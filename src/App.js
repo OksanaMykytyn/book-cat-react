@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './styles/App.css';
+import { Outlet } from 'react-router-dom';
+import axios from 'axios';
+
 
 import LandingPage from './pages/LandingPage';
 import RegisterPage from './pages/RegisterPage';
@@ -19,63 +22,19 @@ import SupportPage from './pages/User/Support';
 import ProfilePage from './pages/User/Profile';
 import DashbordAdminPage from './pages/Admin/DashboardAdmin';
 import EditBookPage from './pages/User/EditBook';
+import ProtectedRoute from './pages/User/ProtectedRoute';
 
 import { LOCAL_STORAGE_KEY, REMOVED_BOOKS_KEY } from './constants';
 
-const defaultBooks = [
-  {
-    inventoryNumber: "39403",
-    title: "1984",
-    author: "Джордж Оруелл",
-    year: 1949,
-    udc: "821.111",
-    udcForm: "Антиутопія",
-    accompanyingDoc: "Немає",
-    price: 250,
-  },
-  {
-    inventoryNumber: "39404",
-    title: "Гаррі Поттер і філософський камінь",
-    author: "Джоан Роулінг",
-    year: 1997,
-    udc: "821.111",
-    udcForm: "Фентезі",
-    accompanyingDoc: "Немає",
-    price: 200,
-  },
-  {
-    inventoryNumber: "39405",
-    title: "Убити пересмішника",
-    author: "Харпер Лі",
-    year: 1960,
-    udc: "821.111",
-    udcForm: "Роман",
-    accompanyingDoc: "Немає",
-    price: 240,
-  },
-  {
-    inventoryNumber: "39406",
-    title: "451 градус за Фаренгейтом",
-    author: "Рей Бредбері",
-    year: 1953,
-    udc: "821.111",
-    udcForm: "Наукова фантастика",
-    accompanyingDoc: "Немає",
-    price: 260,
-  },
-  {
-    inventoryNumber: "39407",
-    title: "Маленький принц",
-    author: "Антуан де Сент-Екзюпері",
-    year: 1943,
-    udc: "841.512",
-    udcForm: "Дитяча література",
-    accompanyingDoc: "Немає",
-    price: 180,
-  },
-];
+const defaultBooks = [];
 
 function App() {
+
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark-theme', darkMode);
+  }, [darkMode]);
 
   const [books, setBooks] = useState(() => {
     const savedBooks = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -164,24 +123,34 @@ function App() {
     );
   };
 
+  const [libraryStatus, setLibraryStatus] = useState(null);
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/dashboard" element={<DashbordPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />}>
+        <Route path="/dashboard" element={<DashbordPage darkMode={darkMode}
+          setDarkMode={setDarkMode} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus} />}>
           <Route path="check-payment" element={<CheckPaymentPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="add-book" element={<AddBookPage onAddBook={addBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="search-book" element={<SearchBookPage books={books} onRemoveBook={removeBook} onDeleteBook={deleteBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="removed-book" element={<RemovedBookPage books={removedBooks} onRemoveBook={restoreBook} onDeleteBook={deleteRemovedBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="create-document" element={<CreateDocumentPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="all-documents" element={<AllDocumentPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="settings" element={<SettingsPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="documentation" element={<DocumentationPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="support" element={<SupportPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="profile" element={<ProfilePage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="edit-book/:inventoryNumber" element={<EditBookPage books={books} removedBooks={removedBooks} onUpdateBook={onUpdateBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          <Route
+            element={
+              <ProtectedRoute libraryStatus={libraryStatus}>
+                <Outlet />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="support" element={<SupportPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="profile" element={<ProfilePage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="add-book" element={<AddBookPage onAddBook={addBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="search-book" element={<SearchBookPage books={books} onRemoveBook={removeBook} onDeleteBook={deleteBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="removed-book" element={<RemovedBookPage books={removedBooks} onRemoveBook={restoreBook} onDeleteBook={deleteRemovedBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="create-document" element={<CreateDocumentPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="all-documents" element={<AllDocumentPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="settings" element={<SettingsPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="documentation" element={<DocumentationPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="edit-book/:inventoryNumber" element={<EditBookPage books={books} removedBooks={removedBooks} onUpdateBook={onUpdateBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          </Route>
         </Route>
         <Route path="/dashboard-admin" element={<DashbordAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />}>
           <Route path="documentation" element={<DocumentationPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />

@@ -1,13 +1,10 @@
 import react from "react";
 
-const ToolsForBook = ({ books }) => {
+const ToolsForBook = ({ totalBooks, totalPrice }) => {
 
-    const amount = Array.isArray(books) ? books.length : 0;
+    const amount = totalBooks ? totalBooks : 0;
 
-    // Обчислюємо загальну суму
-    const totalAmount = Array.isArray(books)
-        ? books.reduce((total, book) => total + (book.price || 0), 0)
-        : 0;
+    const totalAmount = totalPrice ? totalPrice : 0;
 
     return (
         <div className="tools-for-book">
