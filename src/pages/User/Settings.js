@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const SettingsPage = ({ toggleNavbar, isNavbarVisible }) => {
     const [userName, setUserName] = useState("");
+    const [userImage, setUserImage] = useState("");
+
     const [inventoryNumber, setInventoryNumber] = useState("");
     const [error, setError] = useState("");
 
@@ -23,6 +25,7 @@ const SettingsPage = ({ toggleNavbar, isNavbarVisible }) => {
                     }
                 });
                 setUserName(response.data.username);
+                setUserImage(response.data.image);
             } catch (error) {
                 console.error("Помилка при отриманні профілю користувача:", error);
             }
@@ -87,7 +90,7 @@ const SettingsPage = ({ toggleNavbar, isNavbarVisible }) => {
 
     return (
         <>
-            <Header name="Налаштування" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} />
+            <Header name="Налаштування" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} userImage={userImage} />
             <form className="container-for-card settings" onSubmit={handleSubmit}>
                 <div className="row-in-card">
                     <label htmlFor="inventoryInput">Введіть інвентарний номер, з якого почнеться відлік</label>

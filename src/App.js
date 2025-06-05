@@ -23,6 +23,13 @@ import ProfilePage from './pages/User/Profile';
 import DashbordAdminPage from './pages/Admin/DashboardAdmin';
 import EditBookPage from './pages/User/EditBook';
 import ProtectedRoute from './pages/User/ProtectedRoute';
+import InWaitingPage from './pages/Admin/InWaitingPage';
+import DocumentationAdminPage from './pages/Admin/DocumentationAdmin';
+import ListUsersPage from './pages/Admin/ListUsersPage';
+import BannedUsersPage from './pages/Admin/BannedUsersPage';
+import ChatsPage from './pages/Admin/ChatsPage';
+import SettingsAdminPage from './pages/Admin/SettingsPage';
+import ProfileAdminPage from './pages/Admin/ProfilePage';
 
 import { LOCAL_STORAGE_KEY, REMOVED_BOOKS_KEY } from './constants';
 
@@ -133,13 +140,10 @@ function App() {
         <Route path="/dashboard" element={<DashbordPage darkMode={darkMode}
           setDarkMode={setDarkMode} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus} />}>
           <Route path="check-payment" element={<CheckPaymentPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route
-            element={
-              <ProtectedRoute libraryStatus={libraryStatus}>
-                <Outlet />
-              </ProtectedRoute>
-            }
-          >
+          <Route element={<ProtectedRoute libraryStatus={libraryStatus}>
+            <Outlet />
+          </ProtectedRoute>
+          }>
             <Route path="support" element={<SupportPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
             <Route path="profile" element={<ProfilePage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
             <Route path="add-book" element={<AddBookPage onAddBook={addBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
@@ -152,8 +156,15 @@ function App() {
             <Route path="edit-book/:inventoryNumber" element={<EditBookPage books={books} removedBooks={removedBooks} onUpdateBook={onUpdateBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
           </Route>
         </Route>
-        <Route path="/dashboard-admin" element={<DashbordAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />}>
-          <Route path="documentation" element={<DocumentationPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+        <Route path="/dashboard-admin" element={<DashbordAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} darkMode={darkMode}
+          setDarkMode={setDarkMode} />}>
+          <Route path="documentation" element={<DocumentationAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          <Route path="in-waiting" element={<InWaitingPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          <Route path="list-users" element={<ListUsersPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          <Route path="banned-users" element={<BannedUsersPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          <Route path="chats" element={<ChatsPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          <Route path="settings" element={<SettingsAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          <Route path="profile" element={<ProfileAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
         </Route>
         <Route path="/payment" element={<PaymentPage />} />
       </Routes>

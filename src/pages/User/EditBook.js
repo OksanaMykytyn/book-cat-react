@@ -22,6 +22,8 @@ const EditBookPage = ({ toggleNavbar, isNavbarVisible }) => {
 
 
     const [userName, setUserName] = useState("");
+    const [userImage, setUserImage] = useState("");
+
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
@@ -37,6 +39,7 @@ const EditBookPage = ({ toggleNavbar, isNavbarVisible }) => {
                     }
                 });
                 setUserName(response.data.username);
+                setUserImage(response.data.image);
             } catch (error) {
                 console.error("Помилка при отриманні профілю користувача:", error);
             }
@@ -138,7 +141,7 @@ const EditBookPage = ({ toggleNavbar, isNavbarVisible }) => {
 
     return (
         <>
-            <Header name="Редагувати книгу" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} />
+            <Header name="Редагувати книгу" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} userImage={userImage} />
             <form onSubmit={handleSubmit} className="container-for-card add-book">
                 <div className="row-in-card">
                     <label>Назва</label>

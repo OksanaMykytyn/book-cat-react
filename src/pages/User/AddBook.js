@@ -5,8 +5,6 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-
 const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
@@ -19,6 +17,8 @@ const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
     const [accompanyingDoc, setAccompanyingDoc] = useState("");
 
     const [userName, setUserName] = useState("");
+    const [userImage, setUserImage] = useState("");
+
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -33,6 +33,7 @@ const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
                     }
                 });
                 setUserName(response.data.username);
+                setUserImage(response.data.image);
             } catch (error) {
                 console.error("Помилка при отриманні профілю користувача:", error);
             }
@@ -170,7 +171,7 @@ const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
 
     return (
         <>
-            <Header name="Додати книгу" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} />
+            <Header name="Додати книгу" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} userImage={userImage} />
             <form onSubmit={handleSubmit} className="container-for-card add-book">
                 <div className="row-in-card">
                     <label>Назва</label>
@@ -185,7 +186,7 @@ const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
 
                 </div>
                 <div className="row-in-card">
-                    <label>*Якщо ввести кількість примірників, то інвентарний номер присвоїться автоматично до кожного, починаючи з останнього записаного. Якщо ввести інвентарний номер вручну, поле з кількістю примірників не потрібно заповнювати</label>
+                    <label className="explanetion">*Якщо ввести кількість примірників, то інвентарний номер присвоїться автоматично до кожного, починаючи з останнього записаного. Якщо ввести інвентарний номер вручну, поле з кількістю примірників не потрібно заповнювати</label>
                 </div>
                 <div className="row-in-card">
                     <label>*Кількість примірників</label>

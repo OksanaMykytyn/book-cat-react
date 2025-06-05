@@ -9,6 +9,10 @@
 :root {
   --background-color: #F7F7F7;
   --color-for-card: white;
+  --for-text: #181818;
+  --for-header-hover: #181818;
+  --for-text-hover: #F7F7F7;
+  --for-text-navbar: #F7F7F7;
   --purple-color: #673AB7;
   --black-color-for-menu: #181818;
   --yellow-color: #FFF5A0;
@@ -17,25 +21,31 @@
   --box-shadow-for-card: 0px 0px 6px rgba(103, 58, 183, 100);
   --for-input: #B39CD0;
   --box-shadow-for-input: 0px 0px 4px var(--for-input);
+  --color-for-button: #F7F7F7;
 
-  --background-color-dark-theme: #393939;
-  --filter-for-icon: invert(100%) sepia(55%) saturate(34%) hue-rotate(327deg) brightness(114%) contrast(94%);
+  --filter-for-support-icon: brightness(0) saturate(100%) invert(10%) sepia(0%) saturate(199%) hue-rotate(149deg) brightness(94%) contrast(99%);
+  --filter-for-support-icon-hover: invert(100%) sepia(55%) saturate(34%) hue-rotate(327deg) brightness(114%) contrast(94%);
 }
 
 .dark-theme {
   --background-color: #181818;
   --color-for-card: black;
+  --for-text: #F7F7F7;
+  --for-header-hover: #F7F7F7;
+  --for-text-hover: #181818;
+  --for-text-navbar: #F7F7F7;
   --purple-color: #673AB7;
-  --black-color-for-menu: #F7F7F7;
+  --black-color-for-menu: #181818;
   --yellow-color: #FFF5A0;
   --red-color: #FFAF95;
   --grey-color: #858585;
   --box-shadow-for-card: 0px 0px 6px rgba(103, 58, 183, 100);
   --for-input: #B39CD0;
   --box-shadow-for-input: 0px 0px 4px var(--for-input);
+  --color-for-button: #F7F7F7;
 
-  --background-color-dark-theme: #393939;
-  --filter-for-icon: invert(100%) sepia(55%) saturate(34%) hue-rotate(327deg) brightness(114%) contrast(94%);
+  --filter-for-support-icon: invert(100%) sepia(55%) saturate(34%) hue-rotate(327deg) brightness(114%) contrast(94%);
+  --filter-for-support-icon-hover: brightness(0) saturate(100%) invert(10%) sepia(0%) saturate(199%) hue-rotate(149deg) brightness(94%) contrast(99%);
 }
 
 body {
@@ -102,48 +112,13 @@ a {
   border-radius: 16px;
   border: 1px solid var(--purple-color);
   padding: 8px 14px;
-  color: var(--black-color-for-menu);
+  color: var(--for-text);
   font-size: 16px;
   font-weight: 400;
+  background-color: var(--color-for-card);
 }
 
-/* 
-.App {
+.row-in-card p.tac {
   text-align: center;
+  width: 100%;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-} */

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import Header from "../../components/Common/header/Header";
-import Document from "../../components/Common/document/Document";
+import HeaderAdmin from "../../components/Common/header/HeaderAdmin";
+import UserCard from "../../components/Admin/user-card/UserCard";
 
-const AllDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
-    const [documents, setDocuments] = useState([]);
-
+const ListUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
     const [userName, setUserName] = useState("");
     const [userImage, setUserImage] = useState("");
+    const [users, setUsers] = useState([]);
+
 
 
     useEffect(() => {
@@ -33,48 +33,43 @@ const AllDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
         fetchUserProfile();
     }, []);
 
-
     useEffect(() => {
-        const fetchDocuments = async () => {
+        const fetchUserList = async () => {
             const token = localStorage.getItem("token");
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/document/all", {
+                const response = await axios.get("https://localhost:7104/api/user/user-list", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
                     }
                 });
-                setDocuments(response.data);
+                setUsers(response.data);
             } catch (error) {
-                console.error("Помилка при завантаженні документів:", error);
+                console.error("Помилка при завантаженні списку користувачів:", error);
             }
         };
 
-        fetchDocuments();
+        fetchUserList();
     }, []);
 
     return (
         <>
-            <Header name="Збережені документи" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} userImage={userImage} />
-
-            {documents.length === 0 ? (
-                <div className="container-for-card">
-                    <p>Документів ще немає</p>
-                </div>
-            ) : (
-                documents.map((doc, index) => (
-                    <Document
-                        key={index}
-                        fileName={doc.name.endsWith(".docx") ? doc.name : `${doc.name}.docx`}
-                        fileUrl={`https://localhost:7104${doc.url}`}
+            <HeaderAdmin name="Список користувачів" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} userImage={userImage} />
+            {users.map((user) => {
+                const planId = user.libraries[0]?.planId;
+                return (
+                    <UserCard
+                        key={user.id}
+                        userNameCard={user.username}
+                        userImageCard={user.userimage}
+                        planId={planId}
                     />
-                ))
-            )}
-
+                );
+            })}
         </>
     );
 };
 
-export default AllDocumentPage;
+export default ListUsersPage;

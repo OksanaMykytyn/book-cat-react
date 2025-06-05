@@ -23,9 +23,6 @@ const Book = ({
     accompanyingDoc,
     price,
     removedBook,
-    removeBook,
-    isChecked,
-    onCheckboxChange,
     onDeleteBook,
     onRemoveBook
 }) => {

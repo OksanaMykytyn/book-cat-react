@@ -1,0 +1,11 @@
+@media (max-width: 1270px) {}
+
+@media (max-width: 992px) {}
+
+@media (max-width: 768px) {
+    .tools-for-book .row-in-card {
+        flex-direction: column;
+    }
+}
+
+@media(max-width: 576px) {}

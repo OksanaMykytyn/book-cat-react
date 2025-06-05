@@ -4,7 +4,7 @@ import './Navbar.css';
 import logo from '../../../assets/icon/main_logo.svg';
 import arrow from '../../../assets/icon/arrow.svg';
 import arrowForMenu from '../../../assets/icon/arrow_for_menu.svg';
-import darkTheme from '../../../assets/icon/dark_theme.svg';
+import darkTheme from '../../../assets/icon/change_theme.svg';
 
 import { Link } from "react-router-dom";
 
@@ -81,13 +81,13 @@ const Navbar = ({ isOpen, onClose, darkMode, setDarkMode }) => {
                                 <img src={darkTheme} alt="Темна тема" className="navbar-item-icon" />
                             </div>
                         </li>
-
+                        {/* 
                         <li>
                             <Link to="/dashboard/documentation">
                                 <div className="navbar-item-li">Довідка</div>
                                 <img src={arrow} alt="Arrow" className="navbar-item-icon" />
                             </Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </div>

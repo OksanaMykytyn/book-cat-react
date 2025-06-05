@@ -1,5 +1,7 @@
 import react from "react";
 
+import "./ToolsForBook.css";
+
 const ToolsForBook = ({ totalBooks, totalPrice }) => {
 
     const amount = totalBooks ? totalBooks : 0;

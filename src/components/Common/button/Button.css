@@ -33,7 +33,7 @@
 }
 
 .button-purple-min .button-text {
-    color: var(--background-color);
+    color: var(--color-for-button);
     font-size: 18px;
 }
 
@@ -48,4 +48,31 @@
 .button-white-min .button-text {
     color: var(--black-color-for-menu);
     font-size: 18px;
+}
+
+.button-white-min-for-profile {
+    padding: 10px 28px;
+    background-color: var(--color-for-card);
+    width: unset;
+    max-width: unset;
+    box-shadow: var(--box-shadow-for-card);
+    border: solid 1px var(--purple-color);
+}
+
+.button-white-min-for-profile .button-text {
+    color: var(--for-text);
+    font-size: 14px;
+}
+
+.button-purple-min-min {
+    padding: 12px 24px;
+    background-color: var(--purple-color);
+    width: unset;
+    max-width: unset;
+    box-shadow: var(--box-shadow-for-card);
+}
+
+.button-purple-min-min .button-text {
+    color: var(--background-color);
+    font-size: 16px;
 }

@@ -8,7 +8,7 @@ import menu from '../../../assets/icon/for_menu.svg';
 
 import { Link } from "react-router-dom";
 
-const Header = ({ name, isNavbarVisible, onToggleNavbar, userName, userImage }) => {
+const HeaderAdmin = ({ name, isNavbarVisible, onToggleNavbar, userName, userImage }) => {
     return (
         <div className="header">
             <div className="header-logo-and-menu">
@@ -18,12 +18,7 @@ const Header = ({ name, isNavbarVisible, onToggleNavbar, userName, userImage }) 
                 <div className="name-page-on-header">{name}</div>
             </div>
             <div className="header-nav">
-                {/* <Link to="/dashboard/support" className="header-nav-support">
-                    <div className="header-nav-support-text">Підтримка</div>
-                    <img alt="icon-support" src={support} />
-                </Link>
-                <Divider type="first" /> */}
-                <Link to="/dashboard/profile" className="header-nav-account">
+                <Link to="/dashboard-admin/profile" className="header-nav-account">
                     <div className="header-nav-account-text">{userName}</div>
                     <img src={userImage ? `https://localhost:7104${userImage}` : profileImage} alt="Profile" />
                 </Link>
@@ -32,5 +27,4 @@ const Header = ({ name, isNavbarVisible, onToggleNavbar, userName, userImage }) 
     );
 };
 
-export default Header;
-
+export default HeaderAdmin;

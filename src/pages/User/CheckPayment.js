@@ -8,6 +8,7 @@ import axios from "axios";
 const CheckPaymentPage = ({ toggleNavbar, isNavbarVisible }) => {
 
     const [userName, setUserName] = useState("");
+    const [userImage, setUserImage] = useState("");
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -22,6 +23,7 @@ const CheckPaymentPage = ({ toggleNavbar, isNavbarVisible }) => {
                     }
                 });
                 setUserName(response.data.username);
+                setUserImage(response.data.image);
             } catch (error) {
                 console.error("Помилка при отриманні профілю користувача:", error);
             }
@@ -33,7 +35,7 @@ const CheckPaymentPage = ({ toggleNavbar, isNavbarVisible }) => {
 
     return (
         <>
-            <Header name="Підтвердження транзакції..." onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} />
+            <Header name="Підтвердження транзакції..." onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} userImage={userImage} />
             <div className="container-for-card info-card">
                 <h1>Ваш акаунт в очікуванні підтвердження платежу</h1>
                 <p>Очікуйте підтвердження платіжної транзакції. Якщо операція пройшла успішно, впродовж 24 год ви отримаєте можливість користуватися онлайн-каталогом</p>

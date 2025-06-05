@@ -48,8 +48,8 @@ const SearchBookPage = ({ onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisi
                 title: book.name,
                 author: book.author,
                 year: book.yearPublishing,
-                udc: book.udc || '',
-                udcForm: book.udcFormDocument || '',
+                udc: book.udk || '',
+                udcForm: book.udkFormDocument || '',
                 accompanyingDoc: book.checkDocument || '',
                 price: book.price,
                 removedBook: book.removed
@@ -66,6 +66,8 @@ const SearchBookPage = ({ onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisi
     };
 
     const [userName, setUserName] = useState("");
+    const [userImage, setUserImage] = useState("");
+
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -80,6 +82,7 @@ const SearchBookPage = ({ onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisi
                     }
                 });
                 setUserName(response.data.username);
+                setUserImage(response.data.image);
             } catch (error) {
                 console.error("Помилка при отриманні профілю користувача:", error);
             }
@@ -160,7 +163,7 @@ const SearchBookPage = ({ onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisi
 
     return (
         <>
-            <Header name="Пошук по книгах" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} />
+            <Header name="Пошук по книгах" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} userImage={userImage} />
             <FormSearch onSearch={handleSearch} />
             <ListBook
                 books={books}

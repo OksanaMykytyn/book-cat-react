@@ -25,8 +25,6 @@ const ListBook = ({ books, onDeleteBook, onRemoveBook, totalBooks, totalPrice })
             {books.map((book, index) => (
                 <React.Fragment key={book.inventoryNumber}>
                     <div
-                        // до 4 лабораторної
-                        // onClick={() => handleBookClick(book)}
                         style={{
                             backgroundColor: selectedBooks.includes(book) ? '#EDE3FF' : 'transparent',
                         }}

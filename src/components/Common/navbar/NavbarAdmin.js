@@ -30,19 +30,19 @@ const NavbarAdmin = ({ isOpen, onClose }) => {
                     <div className="navbar-catalog-title">Користувачі</div>
                     <ul>
                         <li>
-                            <Link to="/dashboard/add-book">
+                            <Link to="/dashboard-admin/in-waiting">
                                 <div className="navbar-item-li">В очікуванні</div>
                                 <img src={arrow} alt="Arrow" className="navbar-item-icon" />
                             </Link>
                         </li>
                         <li>
-                            <Link to="/dashboard/search-book">
+                            <Link to="/dashboard-admin/list-users">
                                 <div className="navbar-item-li">Список користувачів</div>
                                 <img src={arrow} alt="Arrow" className="navbar-item-icon" />
                             </Link>
                         </li>
                         <li>
-                            <Link to="/dashboard/removed-book">
+                            <Link to="/dashboard-admin/banned-users">
                                 <div className="navbar-item-li">Заборгованості</div>
                                 <img src={arrow} alt="Arrow" className="navbar-item-icon" />
                             </Link>
@@ -53,7 +53,7 @@ const NavbarAdmin = ({ isOpen, onClose }) => {
                     <div className="navbar-report-title">Підтримка</div>
                     <ul>
                         <li>
-                            <Link to="/dashboard/create-document">
+                            <Link to="/dashboard-admin/chats">
                                 <div className="navbar-item-li">Чати</div>
                                 <img src={arrow} alt="Arrow" className="navbar-item-icon" />
                             </Link>
@@ -64,7 +64,7 @@ const NavbarAdmin = ({ isOpen, onClose }) => {
                     <div className="navbar-another-title">Інше</div>
                     <ul>
                         <li>
-                            <Link to="/dashboard/settings">
+                            <Link to="/dashboard-admin/settings">
                                 <div className="navbar-item-li">Налаштування</div>
                                 <img src={arrow} alt="Arrow" className="navbar-item-icon" />
                             </Link>
@@ -75,12 +75,12 @@ const NavbarAdmin = ({ isOpen, onClose }) => {
                                 <img src={darkTheme} alt="Arrow" className="navbar-item-icon" />
                             </Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link to="/dashboard-admin/documentation">
                                 <div className="navbar-item-li">Довідка</div>
                                 <img src={arrow} alt="Arrow" className="navbar-item-icon" />
                             </Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </div>

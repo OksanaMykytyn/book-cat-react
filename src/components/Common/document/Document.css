@@ -6,7 +6,7 @@
 }
 
 .document-title {
-    color: var(--black-color-for-menu);
+    color: var(--for-text);
     font-size: 18px;
     font-weight: 500;
 }

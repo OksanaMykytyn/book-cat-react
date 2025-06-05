@@ -30,10 +30,37 @@
     color: var(--black-color-for-menu);
     font-size: 18px;
     font-weight: 600;
+
 }
 
 .header-auth-support {
     display: flex;
     align-items: center;
     gap: 12px;
+    visibility: hidden;
 }
+
+@media (max-width: 1270px) {}
+
+@media (max-width: 992px) {}
+
+@media (max-width: 768px) {
+
+    .header-auth {
+        justify-content: space-between;
+    }
+
+    .header-auth-support {
+        display: none;
+    }
+
+    .header-auth-title {
+        font-size: 24px;
+    }
+
+    .header-auth-logo-text {
+        font-size: 32px;
+    }
+}
+
+@media(max-width: 576px) {}

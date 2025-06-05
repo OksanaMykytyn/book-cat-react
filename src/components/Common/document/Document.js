@@ -17,7 +17,6 @@ const Document = ({ fileName, fileBlob, fileUrl }) => {
             const a = document.createElement('a');
             a.href = fileUrl;
             a.download = fileName;
-            // a.target = "_blank";
             document.body.appendChild(a);
             a.click();
             a.remove();

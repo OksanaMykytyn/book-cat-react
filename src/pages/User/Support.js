@@ -6,6 +6,8 @@ import Header from "../../components/Common/header/Header";
 const SupportPage = ({ toggleNavbar, isNavbarVisible }) => {
 
     const [userName, setUserName] = useState("");
+    const [userImage, setUserImage] = useState("");
+
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -20,6 +22,7 @@ const SupportPage = ({ toggleNavbar, isNavbarVisible }) => {
                     }
                 });
                 setUserName(response.data.username);
+                setUserImage(response.data.image);
             } catch (error) {
                 console.error("Помилка при отриманні профілю користувача:", error);
             }
@@ -29,7 +32,7 @@ const SupportPage = ({ toggleNavbar, isNavbarVisible }) => {
     }, []);
 
     return (
-        <Header name="Підтримка" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} />
+        <Header name="Підтримка" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} userImage={userImage} />
     );
 
 };

@@ -9,6 +9,8 @@ import Document from "../../components/Common/document/Document";
 const CreateDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
     const [title, setTitle] = useState("");
     const [userName, setUserName] = useState("");
+    const [userImage, setUserImage] = useState("");
+
     const [documentFormat, setDocumentFormat] = useState("");
     const [dateFrom, setDateFrom] = useState("");
     const [dateTo, setDateTo] = useState("");
@@ -31,6 +33,7 @@ const CreateDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
                     }
                 });
                 setUserName(response.data.username);
+                setUserImage(response.data.image);
             } catch (error) {
                 console.error("Помилка при отриманні профілю користувача:", error);
             }
@@ -120,7 +123,7 @@ const CreateDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
 
     return (
         <>
-            <Header name="Створити документ" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} />
+            <Header name="Створити документ" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} userImage={userImage} />
             <form className="container-for-card create-document" onSubmit={handleSubmit}>
                 <div className="row-in-card">
                     <label className="text" htmlFor="title">Введіть назву документу</label>

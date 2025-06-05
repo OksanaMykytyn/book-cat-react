@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Header from "../../components/Common/header/Header";
 
+import HeaderAdmin from "../../components/Common/header/HeaderAdmin";
 
-const DocumentationPage = ({ toggleNavbar, isNavbarVisible }) => {
-
+const ChatsPage = ({ isNavbarVisible, toggleNavbar }) => {
     const [userName, setUserName] = useState("");
     const [userImage, setUserImage] = useState("");
 
@@ -32,9 +31,8 @@ const DocumentationPage = ({ toggleNavbar, isNavbarVisible }) => {
     }, []);
 
     return (
-        <Header name="Довідка" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} userImage={userImage} />
+        <HeaderAdmin name="Чати" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} userImage={userImage} />
     );
-
 };
 
-export default DocumentationPage;
+export default ChatsPage;
