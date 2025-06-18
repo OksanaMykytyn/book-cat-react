@@ -6,12 +6,6 @@ import Divider from "../../components/Common/divider/Divider";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const plans = [
-    { id: 1, title: "До 15 тис. книг", price: "100 грн / міс." },
-    { id: 2, title: "До 30 тис. книг", price: "200 грн / міс." },
-    { id: 3, title: "До 40 тис. книг", price: "360 грн / міс." }
-];
-
 const ProfilePage = ({ toggleNavbar, isNavbarVisible }) => {
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
@@ -24,6 +18,7 @@ const ProfilePage = ({ toggleNavbar, isNavbarVisible }) => {
     const [imageUrl, setImageUrl] = useState("");
     const [userImage, setUserImage] = useState("");
 
+    const [plans, setPlans] = useState([]);
     const [isFormChanged, setIsFormChanged] = useState(false);
     const fileInputRef = useRef(null);
 
@@ -55,7 +50,26 @@ const ProfilePage = ({ toggleNavbar, isNavbarVisible }) => {
             }
         };
 
+        const fetchPlans = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            try {
+                const response = await axios.get("https://localhost:7104/api/plan", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'X-Requested-From': 'BookCatApp'
+                    }
+                });
+
+                setPlans(response.data);
+            } catch (error) {
+                console.error("Помилка при отриманні тарифних планів:", error);
+            }
+        };
+
         fetchSetupData();
+        fetchPlans();
     }, []);
 
     useEffect(() => {
@@ -198,20 +212,33 @@ const ProfilePage = ({ toggleNavbar, isNavbarVisible }) => {
                 </div>
                 <div className="row-in-card">
                     <div className="form-group-with-three-card-elements">
-                        {plans.map(plan => (
-                            <div
-                                key={plan.id}
-                                className={`form-group-with-three-card-element ${plan.id === planId ? "selected" : ""}`}
-                                style={{ cursor: "pointer" }}
-                                onClick={() => {
-                                    setPlanId(plan.id);
-                                    setIsFormChanged(true);
-                                }}
-                            >
-                                <div className="form-group-with-three-card-element-count">{plan.title}</div>
-                                <div className="form-group-with-three-card-element-price">{plan.price}</div>
-                            </div>
-                        ))}
+                        {plans.map(plan => {
+                            const isDisabled = booksCount > plan.maxBooks;
+                            return (
+                                <div
+                                    key={plan.id}
+                                    className={`form-group-with-three-card-element ${plan.id === planId ? "selected" : ""} ${isDisabled ? "disabled" : ""}`}
+                                    style={{
+                                        cursor: isDisabled ? "not-allowed" : "pointer",
+                                        opacity: isDisabled ? 0.5 : 1,
+                                        pointerEvents: isDisabled ? "none" : "auto"
+                                    }}
+                                    onClick={() => {
+                                        if (!isDisabled) {
+                                            setPlanId(plan.id);
+                                            setIsFormChanged(true);
+                                        }
+                                    }}
+                                >
+                                    <div className="form-group-with-three-card-element-count">
+                                        До {plan.maxBooks.toLocaleString("uk-UA")} книг
+                                    </div>
+                                    <div className="form-group-with-three-card-element-price">
+                                        {plan.price.toFixed(0)} грн / міс.
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
 

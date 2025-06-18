@@ -9,6 +9,7 @@ const FormSearch = ({ onSearch }) => {
         udc: "",
         udcForm: "",
         accompanyingDoc: "",
+        inventoryNumber: "",
     });
 
     const handleChange = (e) => {
@@ -39,6 +40,9 @@ const FormSearch = ({ onSearch }) => {
             <div className="row-in-card">
                 <label className="text">Дата і номер супровідного документу</label>
                 <input type="text" name="accompanyingDoc" value={formData.accompanyingDoc} onChange={handleChange} className="input" placeholder="Введіть дані накладної..." />
+
+                <label className="text">Інвентарний номер</label>
+                <input type="text" name="inventoryNumber" value={formData.inventoryNumber} onChange={handleChange} className="input" placeholder="Введіть інвентарний номер..." />
             </div>
             <Button name="Пошук" color="purple-min" />
         </form>

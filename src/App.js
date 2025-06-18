@@ -30,6 +30,8 @@ import BannedUsersPage from './pages/Admin/BannedUsersPage';
 import ChatsPage from './pages/Admin/ChatsPage';
 import SettingsAdminPage from './pages/Admin/SettingsPage';
 import ProfileAdminPage from './pages/Admin/ProfilePage';
+import OneChatWithUser from './pages/Admin/OneChatWithUser';
+import GuestSupportPage from './pages/GuestSupport';
 
 import { LOCAL_STORAGE_KEY, REMOVED_BOOKS_KEY } from './constants';
 
@@ -137,6 +139,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/guest-support" element={<GuestSupportPage />} />
         <Route path="/dashboard" element={<DashbordPage darkMode={darkMode}
           setDarkMode={setDarkMode} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus} />}>
           <Route path="check-payment" element={<CheckPaymentPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
@@ -163,6 +166,7 @@ function App() {
           <Route path="list-users" element={<ListUsersPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
           <Route path="banned-users" element={<BannedUsersPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
           <Route path="chats" element={<ChatsPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          <Route path='chat/:id' element={<OneChatWithUser isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
           <Route path="settings" element={<SettingsAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
           <Route path="profile" element={<ProfileAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
         </Route>

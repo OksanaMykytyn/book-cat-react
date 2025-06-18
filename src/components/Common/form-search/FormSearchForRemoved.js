@@ -10,6 +10,7 @@ const FormSearchForRemoved = ({ onSearch }) => {
         udc: "",
         udcForm: "",
         accompanyingDoc: "",
+        inventoryNumber: "",
         removed: ""
     });
 
@@ -41,6 +42,9 @@ const FormSearchForRemoved = ({ onSearch }) => {
             <div className="row-in-card">
                 <label className="text">Дата і номер супровідного документу</label>
                 <input type="text" name="accompanyingDoc" value={formData.accompanyingDoc} onChange={handleChange} className="input" placeholder="Введіть дані накладної..." />
+
+                <label className="text">Інвентарний номер</label>
+                <input type="text" name="inventoryNumber" value={formData.inventoryNumber} onChange={handleChange} className="input" placeholder="Введіть інвентарний номер..." />
             </div>
             <div className="row-in-card">
                 <label className="text">Дата списання</label>

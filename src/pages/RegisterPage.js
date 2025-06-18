@@ -1,17 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Auth/header/Header";
 import '../styles/Register.css';
 import Button from "../components/Common/button/Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const plans = [
-    { id: 1, title: "До 15 тис. книг", price: "100 грн / міс." },
-    { id: 2, title: "До 30 тис. книг", price: "200 грн / міс." },
-    { id: 3, title: "Від 30 тис. книг", price: "360 грн / міс." }
-];
-
 const RegisterPage = () => {
+    const [plans, setPlans] = useState([]);
+    const [loadingPlans, setLoadingPlans] = useState(true);
     const [username, setUsername] = useState("");
     const [userlogin, setUserlogin] = useState("");
     const [userpassword, setUserpassword] = useState("");
@@ -92,7 +88,10 @@ const RegisterPage = () => {
             const loginResponse = await axios.post("https://localhost:7104/api/user/login", {
                 Userlogin: userlogin.trim(),
                 Userpassword: userpassword.trim()
-            });
+            },
+                {
+                    headers: { 'X-Requested-From': 'BookCatApp' }
+                });
 
             const token = loginResponse.data.token;
             localStorage.setItem("token", token);
@@ -109,6 +108,21 @@ const RegisterPage = () => {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        const fetchPlans = async () => {
+            try {
+                const response = await axios.get("https://localhost:7104/api/plan");
+                setPlans(response.data);
+            } catch (error) {
+                console.error("Не вдалося отримати тарифні плани:", error);
+            } finally {
+                setLoadingPlans(false);
+            }
+        };
+
+        fetchPlans();
+    }, []);
 
     return (
         <>
@@ -163,8 +177,8 @@ const RegisterPage = () => {
                                 onClick={() => handlePlanSelect(plan.id)}
                                 style={{ cursor: "pointer" }}
                             >
-                                <div className="form-group-with-three-card-element-count">{plan.title}</div>
-                                <div className="form-group-with-three-card-element-price">{plan.price}</div>
+                                <div className="form-group-with-three-card-element-count">До {plan.maxBooks} книг</div>
+                                <div className="form-group-with-three-card-element-price">{plan.price} грн / міс.</div>
                             </div>
                         ))}
                     </div>

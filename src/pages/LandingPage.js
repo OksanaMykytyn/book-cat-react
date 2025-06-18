@@ -1,25 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../styles/Landing.css';
+
 import topImage from "../assets/image/top_image.jpg";
 import bottomImage from "../assets/image/bottom_image.jpg";
-
 import step1Image from "../assets/image/step_1.jpg";
 import step2Image from "../assets/image/step_2.jpg";
 import step3Image from "../assets/image/step_3.jpg";
 
 import Header from "../components/Landing/header/Header";
 import Button from "../components/Common/button/Button";
+import axios from "axios";
 
 const LandingPage = () => {
     const navigate = useNavigate();
+    const [plans, setPlans] = useState([]);
+
+    useEffect(() => {
+        const fetchPlans = async () => {
+            try {
+                const response = await axios.get("https://localhost:7104/api/plan");
+                setPlans(response.data);
+            } catch (error) {
+                console.error("Не вдалося отримати тарифні плани:", error);
+            }
+        };
+
+        fetchPlans();
+    }, []);
 
     const handleRegisterClick = () => {
         navigate("/register");
     };
 
     const handleSupportClick = () => {
-        navigate("/login");
+        navigate("/guest-support");
     };
 
     return (
@@ -32,7 +47,7 @@ const LandingPage = () => {
                     <p>Реєструй акаунт, додавай книги, генеруй звітнісь! Якщо виникають питання, звертайся у нашу підтримку</p>
                     <div className="landing-promo-group-buttons">
                         <Button color="purple-min" name="Зареєструватися" onClick={handleRegisterClick} />
-                        <Button color="white-min" name="Увійти" onClick={handleSupportClick} />
+                        <Button color="white-min" name="Написати" onClick={handleSupportClick} />
                     </div>
                 </div>
             </section>
@@ -54,23 +69,19 @@ const LandingPage = () => {
                     </div>
                 </div>
             </section>
+
             <section className="container landing-payment">
                 <h2>Обери свій тарифний план</h2>
                 <div className="landing-payment-group">
-                    <div className="container-for-card landing-payment-element">
-                        <div className="landing-payment-element-count">До 15 тис. книг</div>
-                        <div className="landing-payment-element-price">100 грн / міс.</div>
-                    </div>
-                    <div className="container-for-card landing-payment-element">
-                        <div className="landing-payment-element-count">До 30 тис. книг</div>
-                        <div className="landing-payment-element-price">200 грн / міс.</div>
-                    </div>
-                    <div className="container-for-card landing-payment-element">
-                        <div className="landing-payment-element-count">Від 30 тис. книг</div>
-                        <div className="landing-payment-element-price">360 грн / міс.</div>
-                    </div>
+                    {plans.map(plan => (
+                        <div key={plan.id} className="container-for-card landing-payment-element">
+                            <div className="landing-payment-element-count">До {plan.maxBooks} книг</div>
+                            <div className="landing-payment-element-price">{plan.price} грн \ міс.</div>
+                        </div>
+                    ))}
                 </div>
             </section>
+
             <section className="container landing-promo landing-end">
                 <img src={bottomImage} alt="Image" />
                 <div className="landing-promo-group">
@@ -80,6 +91,7 @@ const LandingPage = () => {
                     </div>
                 </div>
             </section>
+
             <footer>
                 Авторські права захищено.
             </footer>

@@ -5,6 +5,7 @@
 
 .main-section {
     width: 100%;
+    position: relative;
 }
 
 .row-in-card {
@@ -34,7 +35,9 @@
 .search-book,
 .create-document,
 .settings,
-.profile {
+.profile,
+.send-message,
+.setting-admin {
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -44,7 +47,9 @@
 .search-book button,
 .create-document button,
 .settings button,
-.profile button {
+.profile button,
+.send-message button,
+.setting-admin button {
     align-self: center;
 }
 
@@ -56,6 +61,30 @@
 .tools-for-book .row-in-card p {
     font-size: 18px;
     color: var(--for-text);
+
+}
+
+.send-message {
+    position: relative;
+    width: -webkit-fill-available;
+}
+
+.all-message {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 400px;
+}
+
+.form-group-with-three-card-element.disabled {
+    background-color: #eee;
+    color: #999;
+    border: 1px solid #ccc;
+}
+
+.profile .form-group-with-three-card-element {
+    min-width: 180px;
 }
 
 @media (max-width: 1270px) {}

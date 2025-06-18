@@ -18,11 +18,10 @@ const Header = ({ name, isNavbarVisible, onToggleNavbar, userName, userImage }) 
                 <div className="name-page-on-header">{name}</div>
             </div>
             <div className="header-nav">
-                {/* <Link to="/dashboard/support" className="header-nav-support">
+                <Link to="/dashboard/support" className="header-nav-support">
                     <div className="header-nav-support-text">Підтримка</div>
-                    <img alt="icon-support" src={support} />
                 </Link>
-                <Divider type="first" /> */}
+                <Divider type="first" />
                 <Link to="/dashboard/profile" className="header-nav-account">
                     <div className="header-nav-account-text">{userName}</div>
                     <img src={userImage ? `https://localhost:7104${userImage}` : profileImage} alt="Profile" />

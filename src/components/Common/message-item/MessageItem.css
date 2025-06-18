@@ -1,0 +1,31 @@
+.message {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    margin: 0px 12px 0px 12px;
+}
+
+.message.right {
+    flex-direction: row-reverse;
+    justify-content: end;
+    padding-right: 36px;
+}
+
+.container-for-message {
+    padding: 12px;
+    margin: 12px;
+    border-radius: 16px;
+    box-shadow: var(--box-shadow-for-card);
+    background-color: var(--color-for-card);
+    width: 50vw;
+    min-width: 200px;
+}
+
+.message img {
+    margin-top: 12px;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 100%;
+    border: 1px solid var(--purple-color);
+}
