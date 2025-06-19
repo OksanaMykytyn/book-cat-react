@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './styles/App.css';
 import { Outlet } from 'react-router-dom';
-import axios from 'axios';
 
 import LandingPage from './pages/LandingPage';
 import RegisterPage from './pages/RegisterPage';
@@ -32,10 +31,6 @@ import ProfileAdminPage from './pages/Admin/ProfilePage';
 import OneChatWithUser from './pages/Admin/OneChatWithUser';
 import GuestSupportPage from './pages/GuestSupport';
 
-import { LOCAL_STORAGE_KEY, REMOVED_BOOKS_KEY } from './constants';
-
-const defaultBooks = [];
-
 function App() {
 
   const [darkMode, setDarkMode] = useState(false);
@@ -44,91 +39,10 @@ function App() {
     document.documentElement.classList.toggle('dark-theme', darkMode);
   }, [darkMode]);
 
-  const [books, setBooks] = useState(() => {
-    const savedBooks = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return savedBooks ? JSON.parse(savedBooks) : defaultBooks;
-  });
-
-  const [removedBooks, setRemovedBooks] = useState(() => {
-    const savedRemovedBooks = localStorage.getItem(REMOVED_BOOKS_KEY);
-    return savedRemovedBooks ? JSON.parse(savedRemovedBooks) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(books));
-    localStorage.setItem(REMOVED_BOOKS_KEY, JSON.stringify(removedBooks));
-  }, [books, removedBooks]);
-
-
-  const removeBook = (inventoryNumber) => {
-    setBooks((prevBooks) => {
-      const updatedBooks = prevBooks.filter(book => book.inventoryNumber !== inventoryNumber);
-      return updatedBooks;
-    });
-
-    setRemovedBooks((prevRemovedBooks) => [...prevRemovedBooks, books.find(book => book.inventoryNumber === inventoryNumber)]);
-  };
-
-  const restoreBook = (inventoryNumber) => {
-    setRemovedBooks((prevRemovedBooks) => {
-      const bookToRestore = prevRemovedBooks.find(book => book.inventoryNumber === inventoryNumber);
-      if (bookToRestore) {
-        const updatedRemovedBooks = prevRemovedBooks.filter(book => book.inventoryNumber !== inventoryNumber);
-        return updatedRemovedBooks;
-      }
-
-      return prevRemovedBooks;
-    });
-
-    setBooks((prevBooks) => {
-      const bookToRestore = removedBooks.find(book => book.inventoryNumber === inventoryNumber);
-      if (bookToRestore) {
-        return [...prevBooks, bookToRestore];
-      }
-      return prevBooks;
-    });
-  };
-
-  const addBook = (newBook) => {
-    setBooks((prevBooks) => {
-      const updatedBooks = [...prevBooks, newBook];
-      return updatedBooks;
-    });
-  };
-
-  const deleteBook = (inventoryNumber) => {
-    setBooks((prevBooks) => {
-      const updatedBooks = prevBooks.filter(book => book.inventoryNumber !== inventoryNumber);
-      return updatedBooks;
-    });
-  };
-
-  const deleteRemovedBook = (inventoryNumber) => {
-    setRemovedBooks((prevBooks) => {
-      const updatedBooks = prevBooks.filter(book => book.inventoryNumber !== inventoryNumber);
-      return updatedBooks;
-    });
-  };
-
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
 
   const toggleNavbar = () => {
-    console.log("Toggle Navbar called");
     setIsNavbarVisible(prevState => !prevState);
-  };
-
-  const onUpdateBook = (updatedBook) => {
-    setBooks((prevBooks) =>
-      prevBooks.map((book) =>
-        book.inventoryNumber === updatedBook.inventoryNumber ? updatedBook : book
-      )
-    );
-
-    setRemovedBooks((prevRemovedBooks) =>
-      prevRemovedBooks.map((book) =>
-        book.inventoryNumber === updatedBook.inventoryNumber ? updatedBook : book
-      )
-    );
   };
 
   const [libraryStatus, setLibraryStatus] = useState(null);
@@ -148,14 +62,14 @@ function App() {
           }>
             <Route path="support" element={<SupportPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
             <Route path="profile" element={<ProfilePage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-            <Route path="add-book" element={<AddBookPage onAddBook={addBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-            <Route path="search-book" element={<SearchBookPage books={books} onRemoveBook={removeBook} onDeleteBook={deleteBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-            <Route path="removed-book" element={<RemovedBookPage books={removedBooks} onRemoveBook={restoreBook} onDeleteBook={deleteRemovedBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="add-book" element={<AddBookPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="search-book" element={<SearchBookPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="removed-book" element={<RemovedBookPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
             <Route path="create-document" element={<CreateDocumentPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
             <Route path="all-documents" element={<AllDocumentPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
             <Route path="settings" element={<SettingsPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
             <Route path="documentation" element={<DocumentationPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-            <Route path="edit-book/:inventoryNumber" element={<EditBookPage books={books} removedBooks={removedBooks} onUpdateBook={onUpdateBook} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="edit-book/:inventoryNumber" element={<EditBookPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
           </Route>
         </Route>
         <Route path="/dashboard-admin" element={<DashbordAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} darkMode={darkMode}

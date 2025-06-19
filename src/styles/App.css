@@ -48,6 +48,10 @@
   --filter-for-support-icon-hover: brightness(0) saturate(100%) invert(10%) sepia(0%) saturate(199%) hue-rotate(149deg) brightness(94%) contrast(99%);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--background-color);
 }

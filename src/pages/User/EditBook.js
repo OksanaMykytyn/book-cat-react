@@ -13,7 +13,6 @@ const EditBookPage = ({ toggleNavbar, isNavbarVisible }) => {
 
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
-    const [copies, setCopies] = useState("");
     const [year, setYear] = useState("");
     const [udc, setUdc] = useState("");
     const [udcForm, setUdcForm] = useState("");
@@ -62,7 +61,6 @@ const EditBookPage = ({ toggleNavbar, isNavbarVisible }) => {
                     }
                 });
                 const book = response.data;
-                console.log("Дата списання:", book.writeOffDate);
 
 
                 setTitle(book.name || "");

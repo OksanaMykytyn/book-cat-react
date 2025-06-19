@@ -7,24 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from "../../../axiosInstance";
 
-const InWaitingUser = ({ userImageCard, userNameCard, planId, libraryId, onPaymentConfirmed }) => {
-    const [plans, setPlans] = useState([]);
-    const [loadingPlans, setLoadingPlans] = useState(true);
-
-    useEffect(() => {
-        const fetchPlans = async () => {
-            try {
-                const response = await axiosInstance.get("/plan");
-                setPlans(response.data);
-            } catch (error) {
-                console.error("Не вдалося отримати тарифні плани:", error);
-            } finally {
-                setLoadingPlans(false);
-            }
-        };
-
-        fetchPlans();
-    }, []);
+const InWaitingUser = ({ userImageCard, userNameCard, planId, plans, loadingPlans, libraryId, onPaymentConfirmed }) => {
 
     const plan = plans.find(p => p.id === planId);
     const planName = plan ? `До ${plan.maxBooks} книг` : "Невідомий тариф";
@@ -61,5 +44,6 @@ const InWaitingUser = ({ userImageCard, userNameCard, planId, libraryId, onPayme
         </div>
     );
 };
+
 
 export default InWaitingUser;

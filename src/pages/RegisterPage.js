@@ -113,7 +113,9 @@ const RegisterPage = () => {
     useEffect(() => {
         const fetchPlans = async () => {
             try {
-                const response = await axiosInstance.get("/plan");
+                const response = await axiosInstance.get("/plan", {
+                    headers: { 'X-Requested-From': 'BookCatApp' }
+                });
                 setPlans(response.data);
             } catch (error) {
                 console.error("Не вдалося отримати тарифні плани:", error);
@@ -134,6 +136,7 @@ const RegisterPage = () => {
                     <input
                         type="text"
                         value={username}
+                        maxLength="100"
                         onChange={(e) => {
                             setUsername(e.target.value);
                             setErrors((prev) => ({ ...prev, username: "" }));

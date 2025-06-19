@@ -11,6 +11,9 @@ const SettingsAdminPage = ({ isNavbarVisible, toggleNavbar }) => {
     const [userName, setUserName] = useState("");
     const [userImage, setUserImage] = useState("");
     const [plans, setPlans] = useState([]);
+    const [emailForPassword, setEmailForPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +32,8 @@ const SettingsAdminPage = ({ isNavbarVisible, toggleNavbar }) => {
 
                 const plansResponse = await axiosInstance.get("/plan", {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${token}`,
+                        'X-Requested-From': 'BookCatApp'
                     }
                 });
                 setPlans(plansResponse.data);
@@ -58,7 +62,8 @@ const SettingsAdminPage = ({ isNavbarVisible, toggleNavbar }) => {
                     price: parseFloat(plan.price)
                 }, {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${token}`,
+                        'X-Requested-From': 'BookCatApp'
                     }
                 });
             }
@@ -68,6 +73,32 @@ const SettingsAdminPage = ({ isNavbarVisible, toggleNavbar }) => {
             toast.error("Не вдалося зберегти тарифи.");
         }
     };
+
+    const handlePasswordChange = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        try {
+            await axiosInstance.post("/user/change-password", {
+                email: emailForPassword,
+                newPassword: newPassword
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'X-Requested-From': 'BookCatApp'
+                }
+            });
+
+            toast.success("Пароль успішно змінено.");
+            setEmailForPassword("");
+            setNewPassword("");
+        } catch (error) {
+            console.error("Помилка при зміні пароля:", error);
+            const msg = error.response?.data || "Не вдалося змінити пароль.";
+            toast.error(typeof msg === "string" ? msg : msg.message || "Помилка.");
+        }
+    };
+
 
     return (
         <>
@@ -107,6 +138,33 @@ const SettingsAdminPage = ({ isNavbarVisible, toggleNavbar }) => {
                 ))}
 
                 <Button color="purple-min" name="Зберегти" onClick={handleSave} />
+                <div className="row-in-card mt-40">
+                    <p className="tac text mb-20">Зміна пароля користувача</p>
+                </div>
+
+                <div className="row-in-card">
+                    <label htmlFor="emailForPassword">Електронна пошта</label>
+                    <input
+                        className="input"
+                        type="email"
+                        id="emailForPassword"
+                        value={emailForPassword}
+                        onChange={(e) => setEmailForPassword(e.target.value)}
+                    />
+                </div>
+
+                <div className="row-in-card">
+                    <label htmlFor="newPassword">Новий пароль</label>
+                    <input
+                        className="input"
+                        type="password"
+                        id="newPassword"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                </div>
+
+                <Button color="white-min-for-profile" name="Змінити пароль" onClick={handlePasswordChange} />
             </div>
             <ToastContainer />
         </>

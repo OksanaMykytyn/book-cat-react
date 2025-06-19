@@ -13,7 +13,7 @@ const BannedUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
     const [userName, setUserName] = useState("");
     const [userImage, setUserImage] = useState("");
     const [bannedUsers, setBannedUsers] = useState([]);
-
+    const [plans, setPlans] = useState([]);
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -31,6 +31,23 @@ const BannedUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
                 setUserImage(response.data.image);
             } catch (error) {
                 console.error("Помилка при отриманні профілю користувача:", error);
+            }
+        };
+
+        const fetchPlans = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            try {
+                const response = await axiosInstance.get("/plan", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'X-Requested-From': 'BookCatApp'
+                    }
+                });
+                setPlans(response.data);
+            } catch (error) {
+                console.error("Помилка при завантаженні тарифних планів:", error);
             }
         };
 
@@ -54,6 +71,7 @@ const BannedUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
 
         fetchUserProfile();
         fetchBannedUsers();
+        fetchPlans();
     }, []);
 
     return (
@@ -69,6 +87,7 @@ const BannedUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
                         planId={planId}
                         userImageCard={user.userimage}
                         libraryId={user.libraries[0]?.id}
+                        plans={plans}
                         onPaymentConfirmed={(confirmedLibraryId) => {
                             setBannedUsers(prevUsers =>
                                 prevUsers.filter(u =>
@@ -77,6 +96,7 @@ const BannedUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
                             );
                         }}
                     />
+
                 );
             })}
 

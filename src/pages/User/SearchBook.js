@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Header from "../../components/Common/header/Header";
 import ListBook from "../../components/Common/list-book/ListBook";
 import FormSearch from '../../components/Common/form-search/form-search';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../axiosInstance';
 
-const SearchBookPage = ({ onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisible }) => {
+const SearchBookPage = ({ toggleNavbar, isNavbarVisible }) => {
 
     const [books, setBooks] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -38,7 +37,8 @@ const SearchBookPage = ({ onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisi
                     ...filters
                 },
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
+                    'X-Requested-From': 'BookCatApp'
                 }
             });
 
@@ -113,15 +113,17 @@ const SearchBookPage = ({ onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisi
                     style={{
                         margin: '0 5px',
                         padding: '5px 10px',
-                        backgroundColor: i === currentPage ? '#ccc' : '#fff',
-                        border: '1px solid #999'
+                        backgroundColor: i === currentPage ? '#673AB7' : '#fff',
+                        color: i === currentPage ? '#fff' : 'black',
+                        border: '1px solid #999',
+                        borderRadius: '8px'
                     }}
                 >
                     {i}
                 </button>
             );
         }
-        return <div style={{ textAlign: 'center', marginTop: '20px' }}>{pages}</div>;
+        return <div style={{ textAlign: 'center', margin: '20px auto 20px auto' }}>{pages}</div>;
     };
 
     const removeBook = async (inventoryNumber, bookName) => {

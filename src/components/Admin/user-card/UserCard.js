@@ -6,14 +6,9 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const planMapping = {
-    1: "До 10 тис книг",
-    2: "До 15 тис книг",
-    3: "До 30 тис книг"
-};
-
-const UserCard = ({ userImageCard, userNameCard, planId }) => {
-    const planName = planMapping[planId] || "Невідомий тариф";
+const UserCard = ({ userImageCard, userNameCard, planId, plans }) => {
+    const plan = plans.find(p => p.id === planId);
+    const planName = plan ? `До ${plan.maxBooks} книг` : "Невідомий тариф";
     const userPhoto = userImageCard ? `https://localhost:7104${userImageCard}` : defaultImage;
 
     return (

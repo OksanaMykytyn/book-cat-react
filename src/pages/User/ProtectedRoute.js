@@ -8,7 +8,6 @@ const ProtectedRoute = ({ children, libraryStatus }) => {
     useEffect(() => {
         if (libraryStatus === null) return;
 
-        console.log(location.pathname);
 
         const allowedPathsForPending = [
             '/dashboard/profile',

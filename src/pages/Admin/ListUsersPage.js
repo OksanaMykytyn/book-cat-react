@@ -9,8 +9,7 @@ const ListUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
     const [userName, setUserName] = useState("");
     const [userImage, setUserImage] = useState("");
     const [users, setUsers] = useState([]);
-
-
+    const [plans, setPlans] = useState([]);
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -31,6 +30,24 @@ const ListUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
             }
         };
 
+        const fetchPlans = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            try {
+                const response = await axiosInstance.get("/plan", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'X-Requested-From': 'BookCatApp'
+                    }
+                });
+                setPlans(response.data);
+            } catch (error) {
+                console.error("Помилка при завантаженні тарифних планів:", error);
+            }
+        };
+
+        fetchPlans();
         fetchUserProfile();
     }, []);
 
@@ -66,6 +83,7 @@ const ListUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
                         userNameCard={user.username}
                         userImageCard={user.userimage}
                         planId={planId}
+                        plans={plans}
                     />
                 );
             })}

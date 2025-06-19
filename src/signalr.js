@@ -1,10 +1,10 @@
-import * as signalR from "@microsoft/signalr"; // Переконайтеся, що ви імпортуєте signalR
+import * as signalR from "@microsoft/signalr";
 
 const connection = new signalR.HubConnectionBuilder()
-    .withUrl("https://localhost:7104/supportHub", { // Змініть на ваш фактичний шлях до хабу
-        accessTokenFactory: () => localStorage.getItem("token") // Отримуємо токен з localStorage
+    .withUrl("https://localhost:7104/supportHub", {
+        accessTokenFactory: () => localStorage.getItem("token")
     })
-    .withAutomaticReconnect() // Додайте автоматичне перепідключення
+    .withAutomaticReconnect()
     .build();
 
 export default connection;

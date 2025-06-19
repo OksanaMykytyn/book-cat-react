@@ -80,10 +80,14 @@
     .header-nav-account-text {
         display: none;
     }
+
+    .name-page-on-header {
+        font-size: 24px;
+    }
 }
 
 @media(max-width: 576px) {
     .name-page-on-header {
-        font-size: 24px;
+        display: none;
     }
 }

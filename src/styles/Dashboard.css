@@ -84,7 +84,71 @@
 }
 
 .profile .form-group-with-three-card-element {
-    min-width: 180px;
+    min-width: 160px;
+}
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.spinner::after {
+    content: "";
+    width: 40px;
+    height: 40px;
+    border: 6px solid #ccc;
+    border-top-color: #6a1b9a;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.documentation-page p,
+.documentation-page li,
+.documentation-page li a {
+    font-size: 18px;
+    color: var(--for-text);
+    margin-bottom: 4px;
+}
+
+.documentation-page li a {
+    color: var(--purple-color);
+}
+
+.documentation-page p {
+    text-indent: 40px;
+}
+
+.documentation-page li a:hover {
+    font-weight: 700;
+}
+
+.documentation-page h2,
+.documentation-page h3,
+.documentation-page h4 {
+    font-size: 24px;
+    color: var(--for-text);
+    font-weight: 700;
+    text-align: center;
+    margin: 8px auto 8px auto;
+}
+
+
+.documentation-page ul {
+    margin-left: 20px;
+    list-style-type: none;
+}
+
+.documentation-page .ul {
+    margin-left: 80px;
+    list-style-type: circle;
 }
 
 @media (max-width: 1270px) {}
@@ -94,6 +158,10 @@
 @media (max-width: 768px) {
 
     .search-book .row-in-card {
+        flex-direction: column;
+    }
+
+    .container-for-card.document {
         flex-direction: column;
     }
 }

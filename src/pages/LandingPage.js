@@ -20,7 +20,9 @@ const LandingPage = () => {
     useEffect(() => {
         const fetchPlans = async () => {
             try {
-                const response = await axiosInstance.get("/plan");
+                const response = await axiosInstance.get("/plan", {
+                    headers: { 'X-Requested-From': 'BookCatApp' }
+                });
                 setPlans(response.data);
             } catch (error) {
                 console.error("Не вдалося отримати тарифні плани:", error);

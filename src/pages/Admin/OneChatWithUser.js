@@ -58,11 +58,9 @@ const OneChatWithUser = ({ toggleNavbar, isNavbarVisible }) => {
         try {
             if (connection.state !== "Connected") {
                 await connection.start();
-                console.log("SignalR Connected");
             }
 
             await connection.invoke("JoinChat", chatId);
-            console.log(`Joined chat group: chat-${chatId}`);
 
             connection.on("ReceiveMessage", (message) => {
                 setMessages(prevMessages => [...prevMessages, message]);
@@ -70,7 +68,6 @@ const OneChatWithUser = ({ toggleNavbar, isNavbarVisible }) => {
             });
 
             connection.on("MessagesMarkedAsRead", (chatId, readerType) => {
-                console.log(`Messages in chat ${chatId} marked as read by ${readerType}`);
                 if (readerType !== "admin") {
                     setMessages(prevMessages =>
                         prevMessages.map(msg =>

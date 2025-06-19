@@ -12,6 +12,8 @@ const InWaitingPage = ({ isNavbarVisible, toggleNavbar }) => {
     const [userName, setUserName] = useState("");
     const [userImage, setUserImage] = useState("");
     const [waitingUsers, setWaitingUsers] = useState([]);
+    const [plans, setPlans] = useState([]);
+    const [loadingPlans, setLoadingPlans] = useState(true);
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -49,8 +51,28 @@ const InWaitingPage = ({ isNavbarVisible, toggleNavbar }) => {
             }
         };
 
+        const fetchPlans = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            try {
+                const response = await axiosInstance.get("/plan", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'X-Requested-From': 'BookCatApp'
+                    }
+                });
+                setPlans(response.data);
+            } catch (error) {
+                console.error("Помилка при завантаженні тарифних планів:", error);
+            } finally {
+                setLoadingPlans(false);
+            }
+        };
+
         fetchUserProfile();
         fetchInWaitingUsers();
+        fetchPlans();
     }, []);
 
     return (
@@ -72,6 +94,8 @@ const InWaitingPage = ({ isNavbarVisible, toggleNavbar }) => {
                         planId={planId}
                         userImageCard={user.userimage}
                         libraryId={user.libraries[0]?.id}
+                        plans={plans}
+                        loadingPlans={loadingPlans}
                         onPaymentConfirmed={(confirmedLibraryId) => {
                             setWaitingUsers(prevUsers =>
                                 prevUsers.filter(u =>
@@ -82,6 +106,7 @@ const InWaitingPage = ({ isNavbarVisible, toggleNavbar }) => {
                     />
                 );
             })}
+
 
             <ToastContainer position="top-right" autoClose={3000} />
         </>

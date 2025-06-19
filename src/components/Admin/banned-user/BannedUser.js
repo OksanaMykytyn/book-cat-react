@@ -7,14 +7,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from "../../../axiosInstance";
 
-const planMapping = {
-    1: "До 10 тис книг",
-    2: "До 15 тис книг",
-    3: "До 30 тис книг"
-};
-
-const BannedUser = ({ userImageCard, userNameCard, planId, libraryId, onPaymentConfirmed }) => {
-    const planName = planMapping[planId] || "Невідомий тариф";
+const BannedUser = ({ userImageCard, userNameCard, planId, libraryId, plans, onPaymentConfirmed }) => {
+    const plan = plans.find(p => p.id === planId);
+    const planName = plan ? `До ${plan.maxBooks} книг` : "Невідомий тариф";
     const userPhoto = userImageCard ? userImageCard : defaultImage;
 
     const handleCheckPayment = async () => {

@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from "../../axiosInstance";
 
-const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
+const AddBookPage = ({ toggleNavbar, isNavbarVisible }) => {
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
     const [copies, setCopies] = useState("");
@@ -146,7 +146,6 @@ const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
             if (inventoryNumber) {
                 const singleBook = { ...baseBook, inventoryNumber };
                 const response = await axiosInstance.post("/book/create", singleBook, { headers });
-                console.log("Книга додана:", response.data);
                 toast.success("Книгу успішно додано!");
             } else {
                 const numCopies = copies ? parseInt(copies) : 1;
@@ -155,7 +154,6 @@ const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
                 }
                 for (let i = 0; i < numCopies; i++) {
                     const response = await axiosInstance.post("/book/create", baseBook, { headers });
-                    console.log(`Примірник ${i + 1} додано:`, response.data);
                 }
 
                 toast.success("Книги успішно додані!");
@@ -172,10 +170,16 @@ const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
             if (backendMessage.includes("ліміт")) {
                 toast.error(backendMessage);
                 setErrors({ global: backendMessage });
+
+            } else if (backendMessage.toLowerCase().includes("номер")) {
+                toast.error("Книга з таким інвентарним номером вже існує.");
+                setErrors({ inventoryNumber: "Книга з таким інвентарним номером вже існує." });
+
             } else {
                 toast.error("Помилка при додаванні книги.");
-                setErrors({ global: "Помилка при додаванні книги: " + (error.response?.data || error.message) });
+                setErrors({ global: "Помилка при додаванні книги: " + (backendMessage || error.message) });
             }
+
 
             console.error("Помилка при додаванні книги:", error.response?.data || error.message);
         }

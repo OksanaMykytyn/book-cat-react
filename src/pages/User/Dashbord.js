@@ -26,7 +26,8 @@ const DashbordPage = ({ isNavbarVisible, toggleNavbar, libraryStatus, setLibrary
             try {
                 const response = await axiosInstance.get("/library/status", {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${token}`,
+                        'X-Requested-From': 'BookCatApp'
                     }
                 });
                 setLibraryStatus(response.data.status);

@@ -47,7 +47,19 @@ const CreateDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
         e.preventDefault();
         const validationErrors = {};
 
-        if (!title.trim()) validationErrors.title = "Введіть назву документу";
+        const trimmedTitle = title.trim();
+        if (!trimmedTitle) {
+            validationErrors.title = "Введіть назву документу";
+        } else {
+            const invalidChars = /[<>:"\/\\|?*]/;
+            if (invalidChars.test(trimmedTitle)) {
+                validationErrors.title = "Назва не повинна містити символи: < > : \" / \\ | ? *";
+            }
+            if (trimmedTitle.length > 100) {
+                validationErrors.title = "Назва повинна бути до 100 символів.";
+            }
+        }
+
         if (!documentFormat) validationErrors.documentFormat = "Оберіть формат документа";
 
         if (documentFormat === "writeOffAct") {
@@ -70,7 +82,7 @@ const CreateDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
             const token = localStorage.getItem("token");
 
             const data = {
-                name: title.trim(),
+                name: trimmedTitle,
                 format: documentFormat,
             };
 
@@ -87,6 +99,7 @@ const CreateDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${token}`,
+                        'X-Requested-From': 'BookCatApp'
                     }
                 }
             );

@@ -10,16 +10,43 @@ const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [errors, setErrors] = useState({ email: "", password: "" });
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setErrorMessage("");
 
+        const newErrors = { email: "", password: "" };
+        let valid = true;
+
+        if (!email.trim()) {
+            newErrors.email = "Введіть електронну пошту";
+            valid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+            newErrors.email = "Невірний формат електронної пошти";
+            valid = false;
+        }
+
+        if (!password.trim()) {
+            newErrors.password = "Введіть пароль";
+            valid = false;
+        } else if (!/^[A-Za-z0-9]{8,20}$/.test(password.trim())) {
+            newErrors.password = "Пароль: 8–20 символів, лише латиниця й цифри";
+            valid = false;
+        }
+
+        if (!valid) {
+            setErrors(newErrors);
+            return;
+        }
+
+        setErrors({});
+
         try {
             const response = await axiosInstance.post("/user/login", {
-                userlogin: email,
-                userpassword: password
+                userlogin: email.trim(),
+                userpassword: password.trim()
             }, {
                 headers: { 'X-Requested-From': 'BookCatApp' }
             });
@@ -27,7 +54,6 @@ const LoginPage = () => {
             const token = response.data.token;
             localStorage.setItem("token", token);
 
-            // для адміна
             if (email.trim().toLowerCase() === "admin@gmail.com") {
                 navigate("/dashboard-admin");
             } else {
@@ -40,6 +66,7 @@ const LoginPage = () => {
         }
     };
 
+
     return (
         <>
             <Header title="Вхід" />
@@ -50,27 +77,39 @@ const LoginPage = () => {
                         type="email"
                         id="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        autoComplete="username"
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            setErrors((prev) => ({ ...prev, email: "" }));
+                        }}
                         required
                     />
+                    {errors.email && <div className="error-text">{errors.email}</div>}
                 </div>
+
                 <div className="form-group-with-input">
                     <label htmlFor="password">Пароль</label>
                     <input
                         type="password"
                         id="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        autoComplete="current-password"
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                            setErrors((prev) => ({ ...prev, password: "" }));
+                        }}
                         required
                     />
+                    {errors.password && <div className="error-text">{errors.password}</div>}
                 </div>
+
 
                 {errorMessage && (
                     <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
                 )}
 
                 <Button color="purple-min" name="Увійти" />
-                <p>Якщо у вас немає акаунту, натисніть <Link to="/register">Зареєструватися</Link></p>
+                <p className="tac">Якщо у вас немає акаунту, натисніть <Link to="/register">Зареєструватися</Link></p>
             </form>
         </>
     );
