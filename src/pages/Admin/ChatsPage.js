@@ -4,6 +4,7 @@ import HeaderAdmin from "../../components/Common/header/HeaderAdmin";
 import { useNavigate } from "react-router-dom";
 
 import UserChat from "../../components/Admin/user-chat/UserChat";
+import axiosInstance from "../../axiosInstance";
 
 const ChatsPage = ({ isNavbarVisible, toggleNavbar }) => {
     const [userName, setUserName] = useState("");
@@ -18,7 +19,7 @@ const ChatsPage = ({ isNavbarVisible, toggleNavbar }) => {
             if (!token) return;
 
             try {
-                const profileRes = await axios.get("https://localhost:7104/api/user/profile", {
+                const profileRes = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "X-Requested-From": "BookCatApp"
@@ -27,7 +28,7 @@ const ChatsPage = ({ isNavbarVisible, toggleNavbar }) => {
                 setUserName(profileRes.data.username);
                 setUserImage(profileRes.data.image);
 
-                const chatsRes = await axios.get("https://localhost:7104/api/support/admin/chats", {
+                const chatsRes = await axiosInstance.get("/support/admin/chats", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "X-Requested-From": "BookCatApp"

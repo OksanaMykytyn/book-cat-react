@@ -4,6 +4,7 @@ import Button from "../../components/Common/button/Button";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from "../../axiosInstance";
 
 const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
     const [title, setTitle] = useState("");
@@ -26,7 +27,7 @@ const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -144,7 +145,7 @@ const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
         try {
             if (inventoryNumber) {
                 const singleBook = { ...baseBook, inventoryNumber };
-                const response = await axios.post("https://localhost:7104/api/book/create", singleBook, { headers });
+                const response = await axiosInstance.post("/book/create", singleBook, { headers });
                 console.log("Книга додана:", response.data);
                 toast.success("Книгу успішно додано!");
             } else {
@@ -153,7 +154,7 @@ const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
                     toast.info("Книги надсилаються. Зачекайте завершення процесу...");
                 }
                 for (let i = 0; i < numCopies; i++) {
-                    const response = await axios.post("https://localhost:7104/api/book/create", baseBook, { headers });
+                    const response = await axiosInstance.post("/book/create", baseBook, { headers });
                     console.log(`Примірник ${i + 1} додано:`, response.data);
                 }
 
@@ -163,9 +164,20 @@ const AddBookPage = ({ onAddBook, toggleNavbar, isNavbarVisible }) => {
             clearForm();
 
         } catch (error) {
+            const backendMessage =
+                typeof error.response?.data === 'string'
+                    ? error.response.data
+                    : error.response?.data?.Message || "";
+
+            if (backendMessage.includes("ліміт")) {
+                toast.error(backendMessage);
+                setErrors({ global: backendMessage });
+            } else {
+                toast.error("Помилка при додаванні книги.");
+                setErrors({ global: "Помилка при додаванні книги: " + (error.response?.data || error.message) });
+            }
+
             console.error("Помилка при додаванні книги:", error.response?.data || error.message);
-            setErrors({ global: "Помилка при додаванні книги: " + (error.response?.data || error.message) });
-            toast.error("Помилка при додаванні книги.");
         }
     };
 

@@ -5,6 +5,7 @@ import defaultImage from '../../../assets/image/avatar.png';
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from "../../../axiosInstance";
 
 const planMapping = {
     1: "До 10 тис книг",
@@ -19,8 +20,8 @@ const BannedUser = ({ userImageCard, userNameCard, planId, libraryId, onPaymentC
     const handleCheckPayment = async () => {
         const token = localStorage.getItem("token");
         try {
-            const response = await axios.post(
-                "https://localhost:7104/api/user/ban-user",
+            const response = await axiosInstance.post(
+                "/user/ban-user",
                 libraryId,
                 {
                     headers: {

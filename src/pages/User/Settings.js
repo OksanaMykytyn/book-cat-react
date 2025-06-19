@@ -4,6 +4,7 @@ import axios from "axios";
 import Button from "../../components/Common/button/Button";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from "../../axiosInstance";
 
 const SettingsPage = ({ toggleNavbar, isNavbarVisible }) => {
     const [userName, setUserName] = useState("");
@@ -18,7 +19,7 @@ const SettingsPage = ({ toggleNavbar, isNavbarVisible }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -36,7 +37,7 @@ const SettingsPage = ({ toggleNavbar, isNavbarVisible }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/library/inventory", {
+                const response = await axiosInstance.get("/library/inventory", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -72,7 +73,7 @@ const SettingsPage = ({ toggleNavbar, isNavbarVisible }) => {
         if (!token) return;
 
         try {
-            await axios.put("https://localhost:7104/api/library/inventory", {
+            await axiosInstance.put("/library/inventory", {
                 inventory: num
             }, {
                 headers: {

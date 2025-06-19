@@ -3,6 +3,7 @@ import axios from "axios";
 
 import HeaderAdmin from "../../components/Common/header/HeaderAdmin";
 import UserCard from "../../components/Admin/user-card/UserCard";
+import axiosInstance from "../../axiosInstance";
 
 const ListUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
     const [userName, setUserName] = useState("");
@@ -17,7 +18,7 @@ const ListUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -39,7 +40,7 @@ const ListUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/user-list", {
+                const response = await axiosInstance.get("/user/user-list", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'

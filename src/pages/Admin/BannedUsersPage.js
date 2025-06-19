@@ -6,6 +6,7 @@ import BannedUser from "../../components/Admin/banned-user/BannedUser";
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from "../../axiosInstance";
 
 
 const BannedUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
@@ -20,7 +21,7 @@ const BannedUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -39,7 +40,7 @@ const BannedUsersPage = ({ isNavbarVisible, toggleNavbar }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/banned-list", {
+                const response = await axiosInstance.get("/user/banned-list", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'

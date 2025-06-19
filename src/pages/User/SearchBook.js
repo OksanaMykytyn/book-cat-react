@@ -5,6 +5,7 @@ import FormSearch from '../../components/Common/form-search/form-search';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from '../../axiosInstance';
 
 const SearchBookPage = ({ onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisible }) => {
 
@@ -30,7 +31,7 @@ const SearchBookPage = ({ onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisi
         try {
             const token = localStorage.getItem("token");
 
-            const response = await axios.get(`https://localhost:7104/api/book/list`, {
+            const response = await axiosInstance.get(`/book/list`, {
                 params: {
                     page,
                     limit: booksPerPage,
@@ -75,7 +76,7 @@ const SearchBookPage = ({ onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisi
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -127,7 +128,7 @@ const SearchBookPage = ({ onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisi
         try {
             const token = localStorage.getItem("token");
 
-            const response = await axios.put(`https://localhost:7104/api/book/remove/${inventoryNumber}`, null, {
+            const response = await axiosInstance.put(`/book/remove/${inventoryNumber}`, null, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'X-Requested-From': 'BookCatApp'
@@ -146,7 +147,7 @@ const SearchBookPage = ({ onRemoveBook, onDeleteBook, toggleNavbar, isNavbarVisi
         try {
             const token = localStorage.getItem("token");
 
-            await axios.delete(`https://localhost:7104/api/book/delete/${inventoryNumber}`, {
+            await axiosInstance.delete(`/book/delete/${inventoryNumber}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'X-Requested-From': 'BookCatApp'

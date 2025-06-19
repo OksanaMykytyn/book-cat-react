@@ -4,7 +4,6 @@ import './styles/App.css';
 import { Outlet } from 'react-router-dom';
 import axios from 'axios';
 
-
 import LandingPage from './pages/LandingPage';
 import RegisterPage from './pages/RegisterPage';
 import DashbordPage from './pages/User/Dashbord';

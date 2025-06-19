@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Common/button/Button";
 import "../styles/Login.css";
 import axios from "axios";
+import axiosInstance from "../axiosInstance";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ const LoginPage = () => {
         setErrorMessage("");
 
         try {
-            const response = await axios.post("https://localhost:7104/api/user/login", {
+            const response = await axiosInstance.post("/user/login", {
                 userlogin: email,
                 userpassword: password
             }, {

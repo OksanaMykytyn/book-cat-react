@@ -3,6 +3,7 @@ import axios from "axios";
 
 import Header from "../../components/Common/header/Header";
 import Document from "../../components/Common/document/Document";
+import axiosInstance from "../../axiosInstance";
 
 const AllDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
     const [documents, setDocuments] = useState([]);
@@ -17,7 +18,7 @@ const AllDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -40,7 +41,7 @@ const AllDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/document/all", {
+                const response = await axiosInstance.get("/document/all", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'

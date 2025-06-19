@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../../components/Common/header/Header";
+import axiosInstance from "../../axiosInstance";
 
 
 const DocumentationPage = ({ toggleNavbar, isNavbarVisible }) => {
@@ -15,7 +16,7 @@ const DocumentationPage = ({ toggleNavbar, isNavbarVisible }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../../components/Common/header/Header";
 import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from "../../axiosInstance";
 
 const SupportPage = ({ toggleNavbar, isNavbarVisible }) => {
     const [userName, setUserName] = useState("");
@@ -13,7 +14,7 @@ const SupportPage = ({ toggleNavbar, isNavbarVisible }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'

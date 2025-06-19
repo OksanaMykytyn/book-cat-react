@@ -6,6 +6,7 @@ import axios from 'axios';
 import Navbar from "../../components/Common/navbar/Navbar";
 import { Outlet } from "react-router-dom";
 import '../../styles/Dashboard.css';
+import axiosInstance from "../../axiosInstance";
 
 
 const DashbordPage = ({ isNavbarVisible, toggleNavbar, libraryStatus, setLibraryStatus, setDarkMode, darkMode }) => {
@@ -23,7 +24,7 @@ const DashbordPage = ({ isNavbarVisible, toggleNavbar, libraryStatus, setLibrary
                 return;
             }
             try {
-                const response = await axios.get("https://localhost:7104/api/library/status", {
+                const response = await axiosInstance.get("/library/status", {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

@@ -4,6 +4,7 @@ import HeaderAdmin from "../../components/Common/header/HeaderAdmin";
 import Button from "../../components/Common/button/Button";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from "../../axiosInstance";
 
 
 const SettingsAdminPage = ({ isNavbarVisible, toggleNavbar }) => {
@@ -17,7 +18,7 @@ const SettingsAdminPage = ({ isNavbarVisible, toggleNavbar }) => {
             if (!token) return;
 
             try {
-                const userResponse = await axios.get("https://localhost:7104/api/user/profile", {
+                const userResponse = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -26,7 +27,7 @@ const SettingsAdminPage = ({ isNavbarVisible, toggleNavbar }) => {
                 setUserName(userResponse.data.username);
                 setUserImage(userResponse.data.image);
 
-                const plansResponse = await axios.get("https://localhost:7104/api/plan", {
+                const plansResponse = await axiosInstance.get("/plan", {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -52,7 +53,7 @@ const SettingsAdminPage = ({ isNavbarVisible, toggleNavbar }) => {
 
         try {
             for (const plan of plans) {
-                await axios.put(`https://localhost:7104/api/plan/${plan.id}`, {
+                await axiosInstance.put(`/plan/${plan.id}`, {
                     maxBooks: parseInt(plan.maxBooks, 10),
                     price: parseFloat(plan.price)
                 }, {

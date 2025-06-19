@@ -11,6 +11,7 @@ import step3Image from "../assets/image/step_3.jpg";
 import Header from "../components/Landing/header/Header";
 import Button from "../components/Common/button/Button";
 import axios from "axios";
+import axiosInstance from "../axiosInstance";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ const LandingPage = () => {
     useEffect(() => {
         const fetchPlans = async () => {
             try {
-                const response = await axios.get("https://localhost:7104/api/plan");
+                const response = await axiosInstance.get("/plan");
                 setPlans(response.data);
             } catch (error) {
                 console.error("Не вдалося отримати тарифні плани:", error);

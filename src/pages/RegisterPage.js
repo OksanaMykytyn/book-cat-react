@@ -4,6 +4,7 @@ import '../styles/Register.css';
 import Button from "../components/Common/button/Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import axiosInstance from "../axiosInstance";
 
 const RegisterPage = () => {
     const [plans, setPlans] = useState([]);
@@ -76,7 +77,7 @@ const RegisterPage = () => {
         setLoading(true);
 
         try {
-            await axios.post("https://localhost:7104/api/user/register", {
+            await axiosInstance.post("/user/register", {
                 Username: username.trim(),
                 Userlogin: userlogin.trim(),
                 Userpassword: userpassword.trim(),
@@ -85,7 +86,7 @@ const RegisterPage = () => {
                 headers: { 'X-Requested-From': 'BookCatApp' }
             });
 
-            const loginResponse = await axios.post("https://localhost:7104/api/user/login", {
+            const loginResponse = await axiosInstance.post("/user/login", {
                 Userlogin: userlogin.trim(),
                 Userpassword: userpassword.trim()
             },
@@ -112,7 +113,7 @@ const RegisterPage = () => {
     useEffect(() => {
         const fetchPlans = async () => {
             try {
-                const response = await axios.get("https://localhost:7104/api/plan");
+                const response = await axiosInstance.get("/plan");
                 setPlans(response.data);
             } catch (error) {
                 console.error("Не вдалося отримати тарифні плани:", error);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import HeaderAdmin from "../../components/Common/header/HeaderAdmin";
+import axiosInstance from "../../axiosInstance";
 
 const ProfileAdminPage = ({ isNavbarVisible, toggleNavbar }) => {
     const [userName, setUserName] = useState("");
@@ -14,7 +15,7 @@ const ProfileAdminPage = ({ isNavbarVisible, toggleNavbar }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'

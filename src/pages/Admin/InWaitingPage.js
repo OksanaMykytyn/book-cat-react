@@ -6,6 +6,7 @@ import InWaitingUser from "../../components/Admin/in-waiting-user/InWaitingUser"
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from "../../axiosInstance";
 
 const InWaitingPage = ({ isNavbarVisible, toggleNavbar }) => {
     const [userName, setUserName] = useState("");
@@ -18,7 +19,7 @@ const InWaitingPage = ({ isNavbarVisible, toggleNavbar }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -36,7 +37,7 @@ const InWaitingPage = ({ isNavbarVisible, toggleNavbar }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/in-waiting", {
+                const response = await axiosInstance.get("/user/in-waiting", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'

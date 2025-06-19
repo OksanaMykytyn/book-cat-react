@@ -5,6 +5,7 @@ import Button from "../../components/Common/button/Button";
 import Divider from "../../components/Common/divider/Divider";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from "../../axiosInstance";
 
 const ProfilePage = ({ toggleNavbar, isNavbarVisible }) => {
     const [userName, setUserName] = useState("");
@@ -28,7 +29,7 @@ const ProfilePage = ({ toggleNavbar, isNavbarVisible }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/library/setup", {
+                const response = await axiosInstance.get("/library/setup", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -55,7 +56,7 @@ const ProfilePage = ({ toggleNavbar, isNavbarVisible }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/plan", {
+                const response = await axiosInstance.get("/plan", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -91,7 +92,7 @@ const ProfilePage = ({ toggleNavbar, isNavbarVisible }) => {
         if (!token) return;
 
         try {
-            await axios.put("https://localhost:7104/api/library/setup/text", {
+            await axiosInstance.put("/library/setup/text", {
                 username: userName,
                 email: email,
                 planId: planId
@@ -105,7 +106,7 @@ const ProfilePage = ({ toggleNavbar, isNavbarVisible }) => {
                 const imageForm = new FormData();
                 imageForm.append("Image", imageFile);
 
-                await axios.put("https://localhost:7104/api/library/setup/image", imageForm, {
+                await axiosInstance.put("/library/setup/image", imageForm, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "multipart/form-data"
@@ -206,6 +207,36 @@ const ProfilePage = ({ toggleNavbar, isNavbarVisible }) => {
                         <p className="tac" style={{ color: "red" }}>Акаунт обмежений у можливостях</p>
                     )}
                 </div>
+
+                <div className="row-in-card">
+                    <p className="tac">
+                        <span
+                            onClick={async () => {
+                                const token = localStorage.getItem("token");
+                                try {
+                                    await axiosInstance.post("/user/logout", null, {
+                                        headers: {
+                                            Authorization: `Bearer ${token}`,
+                                            "X-Requested-From": "BookCatApp"
+                                        }
+                                    });
+                                } catch (error) {
+                                    console.error("Помилка при виході:", error);
+                                }
+                                localStorage.removeItem("token");
+                                window.location.href = "/login";
+                            }}
+                            style={{
+                                color: "#6a1b9a",
+                                cursor: "pointer",
+                                textDecoration: "underline"
+                            }}
+                        >
+                            Вийти з акаунту
+                        </span>
+                    </p>
+                </div>
+
 
                 <div className="row-in-card">
                     <label>Ваш тарифний план:</label>

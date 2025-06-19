@@ -4,6 +4,7 @@ import Header from "../../components/Common/header/Header";
 
 import '../../styles/CheckPayment.css';
 import axios from "axios";
+import axiosInstance from "../../axiosInstance";
 
 const CheckPaymentPage = ({ toggleNavbar, isNavbarVisible }) => {
 
@@ -16,7 +17,7 @@ const CheckPaymentPage = ({ toggleNavbar, isNavbarVisible }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'

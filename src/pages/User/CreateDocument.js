@@ -5,6 +5,7 @@ import Button from "../../components/Common/button/Button";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Document from "../../components/Common/document/Document";
+import axiosInstance from "../../axiosInstance";
 
 const CreateDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
     const [title, setTitle] = useState("");
@@ -26,7 +27,7 @@ const CreateDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -78,8 +79,8 @@ const CreateDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
                 data.dateTo = dateTo;
             }
 
-            const response = await axios.post(
-                'https://localhost:7104/api/document/create',
+            const response = await axiosInstance.post(
+                '/document/create',
                 data,
                 {
                     responseType: 'blob',

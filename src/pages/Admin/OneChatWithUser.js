@@ -8,6 +8,7 @@ import connection from "../../signalr";
 import { useParams } from "react-router-dom";
 
 import Button from "../../components/Common/button/Button";
+import axiosInstance from "../../axiosInstance";
 
 const OneChatWithUser = ({ toggleNavbar, isNavbarVisible }) => {
     const [userName, setUserName] = useState("");
@@ -36,7 +37,7 @@ const OneChatWithUser = ({ toggleNavbar, isNavbarVisible }) => {
     const fetchMessages = async (chatId) => {
         setIsLoading(true);
         try {
-            const res = await axios.get(`https://localhost:7104/api/support/chat/${chatId}/messages`, {
+            const res = await axiosInstance.get(`/support/chat/${chatId}/messages`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -91,7 +92,7 @@ const OneChatWithUser = ({ toggleNavbar, isNavbarVisible }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -163,7 +164,7 @@ const OneChatWithUser = ({ toggleNavbar, isNavbarVisible }) => {
 
             <div className="container-for-card send-message">
                 <div className="row-in-card">
-                    <label htmlFor="message">Введіть ваше повідомлення</label> {/* Змінив текст лейблу */}
+                    <label htmlFor="message">Введіть ваше повідомлення</label>
                     <input
                         id="message"
                         type="text"

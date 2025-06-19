@@ -5,6 +5,7 @@ import Button from "../../components/Common/button/Button";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axiosInstance from "../../axiosInstance";
 
 const EditBookPage = ({ toggleNavbar, isNavbarVisible }) => {
     const { inventoryNumber } = useParams();
@@ -32,7 +33,7 @@ const EditBookPage = ({ toggleNavbar, isNavbarVisible }) => {
             if (!token) return;
 
             try {
-                const response = await axios.get("https://localhost:7104/api/user/profile", {
+                const response = await axiosInstance.get("/user/profile", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -54,7 +55,7 @@ const EditBookPage = ({ toggleNavbar, isNavbarVisible }) => {
                 const token = localStorage.getItem("token");
                 if (!token) return;
 
-                const response = await axios.get(`https://localhost:7104/api/book/get/${inventoryNumber}`, {
+                const response = await axiosInstance.get(`/book/get/${inventoryNumber}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'X-Requested-From': 'BookCatApp'
@@ -124,7 +125,7 @@ const EditBookPage = ({ toggleNavbar, isNavbarVisible }) => {
 
 
         try {
-            const response = await axios.put(`https://localhost:7104/api/book/update/${inventoryNumber}`, updatedBook, {
+            const response = await axiosInstance.put(`/book/update/${inventoryNumber}`, updatedBook, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "X-Requested-From": "BookCatApp"
