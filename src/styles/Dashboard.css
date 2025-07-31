@@ -151,6 +151,10 @@
     list-style-type: circle;
 }
 
+.article-content {
+    width: -webkit-fill-available;
+}
+
 @media (max-width: 1270px) {}
 
 @media (max-width: 992px) {}

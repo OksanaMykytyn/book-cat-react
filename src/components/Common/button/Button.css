@@ -89,3 +89,17 @@
     color: var(--background-color);
     font-size: 16px;
 }
+
+.button-purple-read-more {
+    padding: 6px 24px;
+    background-color: var(--purple-color);
+    width: 100%;
+    max-width: unset;
+    box-shadow: var(--box-shadow-for-card);
+}
+
+.button-purple-read-more .button-text {
+    color: var(--background-color);
+    font-size: 18px;
+    font-weight: 400;
+}

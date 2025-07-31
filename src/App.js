@@ -30,6 +30,13 @@ import SettingsAdminPage from './pages/Admin/SettingsPage';
 import ProfileAdminPage from './pages/Admin/ProfilePage';
 import OneChatWithUser from './pages/Admin/OneChatWithUser';
 import GuestSupportPage from './pages/GuestSupport';
+import AddArticlePage from './pages/Admin/AddArticlePage';
+import EditArticlePage from './pages/Admin/EditArticlePage';
+import AllArticlesPage from './pages/Admin/AllArticlesPage';
+import BlogPage from './pages/BlogPage';
+import PricingPage from './pages/PricingPage';
+import HelpPage from './pages/HelpPage';
+import ArticlePage from './pages/ArticlePage';
 
 function App() {
 
@@ -53,6 +60,12 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/guest-support" element={<GuestSupportPage />} />
+
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/help" element={<HelpPage />} />
+        <Route path="/blog/:slug" element={<ArticlePage />} />
+
         <Route path="/dashboard" element={<DashbordPage darkMode={darkMode}
           setDarkMode={setDarkMode} isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus} />}>
           <Route path="check-payment" element={<CheckPaymentPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
@@ -82,6 +95,9 @@ function App() {
           <Route path='chat/:id' element={<OneChatWithUser isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
           <Route path="settings" element={<SettingsAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
           <Route path="profile" element={<ProfileAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          <Route path="add-article" element={<AddArticlePage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          <Route path="edit-article/:id" element={<EditArticlePage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          <Route path="all-articles" element={<AllArticlesPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
         </Route>
         <Route path="/payment" element={<PaymentPage />} />
       </Routes>
