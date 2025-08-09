@@ -47,6 +47,12 @@ const NavbarAdmin = ({ isOpen, onClose }) => {
                                 <img src={arrow} alt="Arrow" className="navbar-item-icon" />
                             </Link>
                         </li>
+                        <li>
+                            <Link to="/dashboard-admin/pending-users">
+                                <div className="navbar-item-li">Боржники</div>
+                                <img src={arrow} alt="Arrow" className="navbar-item-icon" />
+                            </Link>
+                        </li>
                     </ul>
                 </div>
                 <div className="navbar-report">
@@ -55,6 +61,12 @@ const NavbarAdmin = ({ isOpen, onClose }) => {
                         <li>
                             <Link to="/dashboard-admin/chats">
                                 <div className="navbar-item-li">Чати</div>
+                                <img src={arrow} alt="Arrow" className="navbar-item-icon" />
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/dashboard-admin/add-article">
+                                <div className="navbar-item-li">Додати статтю</div>
                                 <img src={arrow} alt="Arrow" className="navbar-item-icon" />
                             </Link>
                         </li>

@@ -37,6 +37,7 @@ import BlogPage from './pages/BlogPage';
 import PricingPage from './pages/PricingPage';
 import HelpPage from './pages/HelpPage';
 import ArticlePage from './pages/ArticlePage';
+import PendingPage from './pages/Admin/PendingPage';
 
 function App() {
 
@@ -86,18 +87,24 @@ function App() {
           </Route>
         </Route>
         <Route path="/dashboard-admin" element={<DashbordAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} darkMode={darkMode}
-          setDarkMode={setDarkMode} />}>
-          <Route path="documentation" element={<DocumentationAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="in-waiting" element={<InWaitingPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="list-users" element={<ListUsersPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="banned-users" element={<BannedUsersPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="chats" element={<ChatsPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path='chat/:id' element={<OneChatWithUser isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="settings" element={<SettingsAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="profile" element={<ProfileAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="add-article" element={<AddArticlePage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="edit-article/:id" element={<EditArticlePage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
-          <Route path="all-articles" element={<AllArticlesPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          setDarkMode={setDarkMode} libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus} />}>
+          <Route element={<ProtectedRoute libraryStatus={libraryStatus}>
+            <Outlet />
+          </ProtectedRoute>
+          }>
+            <Route path="documentation" element={<DocumentationAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="in-waiting" element={<InWaitingPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="list-users" element={<ListUsersPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="banned-users" element={<BannedUsersPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="chats" element={<ChatsPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path='chat/:id' element={<OneChatWithUser isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="settings" element={<SettingsAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="profile" element={<ProfileAdminPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="add-article" element={<AddArticlePage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="edit-article/:id" element={<EditArticlePage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="all-articles" element={<AllArticlesPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+            <Route path="pending-users" element={<PendingPage isNavbarVisible={isNavbarVisible} toggleNavbar={toggleNavbar} />} />
+          </Route>
         </Route>
         <Route path="/payment" element={<PaymentPage />} />
       </Routes>

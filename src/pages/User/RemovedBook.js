@@ -106,7 +106,7 @@ const RemovedBookPage = ({ toggleNavbar, isNavbarVisible }) => {
                     key={i}
                     onClick={() => handlePageChange(i)}
                     style={{
-                        margin: '0 5px',
+                        margin: '6px 5px',
                         padding: '5px 10px',
                         backgroundColor: i === currentPage ? '#673AB7' : '#fff',
                         color: i === currentPage ? '#fff' : 'black',
