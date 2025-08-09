@@ -37,7 +37,7 @@ const PendingUser = ({ userImageCard, userNameCard, planId, plans, loadingPlans,
                 <img src={userPhoto} alt="User Photo" />
                 <p>{userNameCard} (Тарифний план: {loadingPlans ? "Завантаження..." : planName})</p>
             </div>
-            <Button name="Перевести в очікування" color="blue" onClick={handleMarkUserPending} />
+            <Button name="Перевести в очікування" color="purple-min-min" onClick={handleMarkUserPending} />
         </div>
     );
 };

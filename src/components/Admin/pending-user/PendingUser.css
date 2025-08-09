@@ -1,0 +1,25 @@
+.user-group {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+
+.user-group img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border: 1px solid var(--purple-color);
+    border-radius: 100%;
+}
+
+.user-group p {
+    color: var(--black-color-for-menu);
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.pending-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

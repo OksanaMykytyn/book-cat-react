@@ -34,7 +34,7 @@ const SupportPage = ({ toggleNavbar, isNavbarVisible }) => {
             <Header name="Підтримка" onToggleNavbar={toggleNavbar} isNavbarVisible={isNavbarVisible} userName={userName} userImage={userImage} />
             <div className="container-for-card info-card">
                 <h1>Уся комунікація із підтримкою відбувається через пошту</h1>
-                <p>З будь-яких питань звертайтеся до нас на пошту admin@gmail.com</p>
+                <p>З будь-яких питань звертайтеся до нас на пошту bookcatalog.library@gmail.com</p>
                 <p>Будемо раді відповісти на всі питання!</p>
                 <p>Відповідь очікуйте впродовж 24 годин</p>
             </div>

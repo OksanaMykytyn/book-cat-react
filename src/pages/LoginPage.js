@@ -51,10 +51,10 @@ const LoginPage = () => {
                 headers: { 'X-Requested-From': 'BookCatApp' }
             });
 
-            const token = response.data.token;
+            const { token, userRole } = response.data;
             localStorage.setItem("token", token);
 
-            if (email.trim().toLowerCase() === "admin@gmail.com") {
+            if (userRole === "admin") {
                 navigate("/dashboard-admin");
             } else {
                 navigate("/dashboard/add-book");
