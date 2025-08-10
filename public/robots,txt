@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /dashboard
+Disallow: /dashboard-admin
+Disallow: /login
+Disallow: /register
+
+Sitemap: https://book-catalog.com.ua/sitemap.xml

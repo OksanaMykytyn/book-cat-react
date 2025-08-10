@@ -5,6 +5,9 @@ import axiosInstance from "../axiosInstance";
 import defaultArticleImage from '../assets/image/top_image.jpg';
 import renderContent from "../components/Landing/render-article/RenderContent";
 
+import Seo from "../components/Common/seo/Seo";
+import { articlesSeoData } from "../seo/ArticleSeoData";
+
 const ArticlePage = () => {
     const { slug } = useParams();
     const [article, setArticle] = useState(null);
@@ -63,6 +66,8 @@ const ArticlePage = () => {
         return <p>Статтю не знайдено.</p>;
     }
 
+    const seoData = articlesSeoData[slug] || { title: article.title, description: "Стаття на BookCat" };
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('uk-UA');
@@ -89,6 +94,12 @@ const ArticlePage = () => {
 
     return (
         <div className="article">
+            <Seo
+                title={seoData.title}
+                description={seoData.description}
+                ogTitle={seoData.title}
+                ogDescription={seoData.description}
+            />
             <Header />
             <div className="article-data">
                 <div className="article-data-all">
