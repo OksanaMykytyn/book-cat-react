@@ -13,6 +13,7 @@ const RegisterPage = () => {
     const [userlogin, setUserlogin] = useState("");
     const [userpassword, setUserpassword] = useState("");
     const [selectedPlanId, setSelectedPlanId] = useState(null);
+    const [agreed, setAgreed] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const [errors, setErrors] = useState({
@@ -20,6 +21,7 @@ const RegisterPage = () => {
         userlogin: "",
         userpassword: "",
         plan: "",
+        termsError: "",
         general: ""
     });
 
@@ -37,6 +39,7 @@ const RegisterPage = () => {
             userlogin: "",
             userpassword: "",
             plan: "",
+            termsError: "",
             general: ""
         };
 
@@ -66,6 +69,11 @@ const RegisterPage = () => {
 
         if (!selectedPlanId) {
             newErrors.plan = "Оберіть тарифний план";
+            valid = false;
+        }
+
+        if (!agreed) {
+            newErrors.termsError = "Необхідно погодитися з умовами";
             valid = false;
         }
 
@@ -187,6 +195,21 @@ const RegisterPage = () => {
                         ))}
                     </div>
                     {errors.plan && <div className="error-text">{errors.plan}</div>}
+                </div>
+
+                <div className="form-group-checkbox">
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={agreed}
+                            onChange={(e) => {
+                                setAgreed(e.target.checked);
+                                setErrors((prev) => ({ ...prev, termsError: "" }));
+                            }}
+                        />
+                        <span> Я погоджуюся з <Link to="/blog/privacy-policy">Політикою конфіденційності</Link> та <Link to="/blog/terms-of-use">Умовами використання</Link></span>
+                    </label>
+                    {errors.termsError && <div className="error-text">{errors.termsError}</div>}
                 </div>
 
                 {errors.general && <div className="error-text">{errors.general}</div>}
