@@ -61,7 +61,8 @@ const LoginPage = () => {
             }
 
         } catch (error) {
-            const msg = error.response?.data || "Помилка входу. Спробуйте ще раз.";
+            //const msg = error.response?.data || "Помилка входу. Спробуйте ще раз.";
+            const msg = "Помилка входу. Спробуйте ще раз.";
             setErrorMessage(msg);
         }
     };
