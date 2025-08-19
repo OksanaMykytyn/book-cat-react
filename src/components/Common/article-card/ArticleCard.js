@@ -13,7 +13,7 @@ const ArticleCard = ({ article }) => {
     };
 
     const articleImage = article.coverImage
-        ? `https://localhost:7104${article.coverImage}`
+        ? article.coverImage
         : defaultArticleImage;
 
     return (

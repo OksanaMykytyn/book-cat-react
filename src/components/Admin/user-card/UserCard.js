@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const UserCard = ({ userImageCard, userNameCard, planId, plans }) => {
     const plan = plans.find(p => p.id === planId);
     const planName = plan ? `До ${plan.maxBooks} книг` : "Невідомий тариф";
-    const userPhoto = userImageCard ? `https://localhost:7104${userImageCard}` : defaultImage;
+    const userPhoto = userImageCard ? userImageCard : defaultImage;
 
     return (
         <div className="container-for-card in-waitnig-card">

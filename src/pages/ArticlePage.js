@@ -74,7 +74,7 @@ const ArticlePage = () => {
     };
 
     const articleImage = article.coverImage
-        ? `https://localhost:7104${article.coverImage}`
+        ? article.coverImage
         : defaultArticleImage;
 
     const legendItems = (article.contentBlocks || [])

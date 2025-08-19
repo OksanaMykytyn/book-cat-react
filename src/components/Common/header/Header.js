@@ -24,7 +24,7 @@ const Header = ({ name, isNavbarVisible, onToggleNavbar, userName, userImage }) 
                 <Divider type="first" />
                 <Link to="/dashboard/profile" className="header-nav-account">
                     <div className="header-nav-account-text">{userName}</div>
-                    <img src={userImage ? `https://localhost:7104${userImage}` : profileImage} alt="Profile" />
+                    <img src={userImage ? userImage : profileImage} alt="Profile" />
                 </Link>
             </div>
         </div>

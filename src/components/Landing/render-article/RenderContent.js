@@ -39,7 +39,7 @@ const renderContent = (contentBlocks) => {
             case 'paragraph':
                 return <p key={index}>{renderTextWithLinks(block.data.text, index)}</p>;
             case 'image':
-                const imageUrl = `https://localhost:7104${block.data.src}`;
+                const imageUrl = block.data.src;
                 return (
                     <figure key={index}>
                         <img src={imageUrl} alt={block.data.alt} />

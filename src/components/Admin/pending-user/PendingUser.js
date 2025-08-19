@@ -8,7 +8,7 @@ import axiosInstance from "../../../axiosInstance";
 const PendingUser = ({ userImageCard, userNameCard, planId, plans, loadingPlans, libraryId, onUserMovedToPending }) => {
     const plan = plans.find(p => p.id === planId);
     const planName = plan ? `До ${plan.maxBooks} книг` : "Невідомий тариф";
-    const userPhoto = userImageCard ? `https://localhost:7104${userImageCard}` : defaultImage;
+    const userPhoto = userImageCard ? userImageCard : defaultImage;
 
     const handleMarkUserPending = async () => {
         const token = localStorage.getItem("token");

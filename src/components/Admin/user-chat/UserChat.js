@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const UserChat = ({ userImageCard, userNameCard, unreadCount, onClick }) => {
-    const userPhoto = userImageCard ? `https://localhost:7104/${userImageCard}` : defaultImage;
+    const userPhoto = userImageCard ? userImageCard : defaultImage;
 
     return (
         <div className="container-for-card in-waitnig-card">

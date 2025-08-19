@@ -69,7 +69,7 @@ const AllDocumentPage = ({ toggleNavbar, isNavbarVisible }) => {
                     <Document
                         key={index}
                         fileName={doc.name.endsWith(".docx") ? doc.name : `${doc.name}.docx`}
-                        fileUrl={`https://localhost:7104${doc.url}`}
+                        fileUrl={doc.url}
                     />
                 ))
             )}

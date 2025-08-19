@@ -20,7 +20,7 @@ const HeaderAdmin = ({ name, isNavbarVisible, onToggleNavbar, userName, userImag
             <div className="header-nav">
                 <Link to="/dashboard-admin/profile" className="header-nav-account">
                     <div className="header-nav-account-text">{userName}</div>
-                    <img src={userImage ? `https://localhost:7104${userImage}` : profileImage} alt="Profile" />
+                    <img src={userImage ? userImage : profileImage} alt="Profile" />
                 </Link>
             </div>
         </div>
